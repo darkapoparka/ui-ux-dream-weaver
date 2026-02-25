@@ -30,7 +30,7 @@ export const mockProducts: Product[] = [
     oldPrice: 2200,
     discount: 11,
     image: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=600&h=800&fit=crop",
-    category: "Smartphones",
+    category: "Electronics",
     seller: { name: "treido" },
     rating: 4.8,
     reviewCount: 124,
@@ -42,7 +42,7 @@ export const mockProducts: Product[] = [
     title: "MacBook Pro 16\" M3 Max 36GB",
     price: 3499,
     image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600&h=800&fit=crop",
-    category: "Laptops",
+    category: "Electronics",
     seller: { name: "tech_haven" },
     rating: 4.9,
     reviewCount: 89,
@@ -175,3 +175,18 @@ export const categories = [
   { name: "Software", count: 165 },
   { name: "Grocery", count: 432 },
 ];
+
+export const subcategories: Record<string, string[]> = {
+  Electronics: ["Phones", "Laptops", "TVs", "Cameras", "Audio", "Tablets", "Wearables"],
+  Fashion: ["Shoes", "Watches", "Bags", "Clothing", "Jewelry", "Accessories"],
+  Home: ["Furniture", "Appliances", "Kitchen", "Decor", "Garden", "Tools"],
+  Automotive: ["Cars", "Parts", "Accessories", "Motorcycles", "Tires"],
+  Gaming: ["Consoles", "Games", "Accessories", "PCs", "Peripherals"],
+  Sports: ["Fitness", "Outdoor", "Team Sports", "Cycling", "Running"],
+  Beauty: ["Skincare", "Makeup", "Fragrances", "Haircare", "Tools"],
+  Kids: ["Toys", "Clothing", "Strollers", "Education", "Safety"],
+  Pets: ["Dogs", "Cats", "Food", "Accessories", "Health"],
+  "Real Estate": ["Apartments", "Houses", "Commercial", "Land"],
+  Software: ["Apps", "Games", "Licenses", "Subscriptions"],
+  Grocery: ["Organic", "Beverages", "Snacks", "Fresh", "Pantry"],
+};
