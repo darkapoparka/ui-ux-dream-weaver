@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 const items = [
   { icon: Home, label: "Home", path: "/" },
   { icon: Search, label: "Search", path: "/search" },
-  { icon: Plus, label: "Sell", path: "#", center: true },
+  { icon: Plus, label: "Sell", path: "/sell", center: true },
   { icon: MessageCircle, label: "Messages", path: "#" },
   { icon: User, label: "Profile", path: "/profile" },
 ];
