@@ -37,7 +37,7 @@ const ProfilePage = () => {
         {/* Profile card */}
         <section className="px-4 pt-5 pb-4">
           <div className="flex items-center gap-3.5">
-            <div className="w-14 h-14 rounded-full bg-secondary flex items-center justify-center text-base font-bold text-secondary-foreground">
+            <div className="w-13 h-13 rounded-full bg-secondary flex items-center justify-center text-[14px] font-bold text-secondary-foreground">
               TR
             </div>
             <div className="flex-1 min-w-0">
@@ -45,11 +45,11 @@ const ProfilePage = () => {
                 <h2 className="text-[15px] font-bold text-foreground">treido</h2>
                 <Shield className="w-3.5 h-3.5 text-success" />
               </div>
-              <div className="flex items-center gap-2 text-[12px] text-muted-foreground mt-0.5">
+              <div className="flex items-center gap-2 text-[11px] text-muted-foreground mt-0.5">
                 <span className="flex items-center gap-0.5">
                   <MapPin className="w-3 h-3" /> Sofia
                 </span>
-                <span>·</span>
+                <span className="text-muted-foreground/40">·</span>
                 <span>Joined 2024</span>
               </div>
             </div>
@@ -59,11 +59,11 @@ const ProfilePage = () => {
           </div>
 
           {/* Stats */}
-          <div className="flex gap-6 mt-4 pt-4 border-t border-border">
+          <div className="flex gap-8 mt-4 pt-4 border-t border-border">
             {stats.map((s) => (
-              <div key={s.label}>
+              <div key={s.label} className="text-center">
                 <p className="text-[15px] font-bold text-foreground">{s.value}</p>
-                <p className="text-[11px] text-muted-foreground">{s.label}</p>
+                <p className="text-[11px] text-muted-foreground mt-0.5">{s.label}</p>
               </div>
             ))}
           </div>
@@ -71,7 +71,7 @@ const ProfilePage = () => {
 
         {/* Menu */}
         <section className="px-4 pb-4">
-          <div className="border border-border rounded-xl overflow-hidden bg-card divide-y divide-border">
+          <div className="rounded-xl overflow-hidden bg-card divide-y divide-border border border-border">
             {menu.map((item) => {
               const Icon = item.icon;
               return (
@@ -82,15 +82,15 @@ const ProfilePage = () => {
                   <Icon className="w-[18px] h-[18px] text-muted-foreground" strokeWidth={1.5} />
                   <span className="flex-1 text-[13px] font-medium text-foreground">{item.label}</span>
                   {item.detail && (
-                    <span className="text-[12px] text-muted-foreground">{item.detail}</span>
+                    <span className="text-[11px] text-muted-foreground">{item.detail}</span>
                   )}
-                  <ChevronRight className="w-4 h-4 text-muted-foreground" strokeWidth={1.5} />
+                  <ChevronRight className="w-4 h-4 text-muted-foreground/50" strokeWidth={1.5} />
                 </button>
               );
             })}
           </div>
 
-          <button className="flex items-center gap-3 w-full px-4 py-3 mt-2 text-left text-destructive hover:bg-destructive/5 rounded-xl transition-colors">
+          <button className="flex items-center gap-3 w-full px-4 py-3 mt-3 text-left text-destructive hover:bg-destructive/5 rounded-xl transition-colors">
             <LogOut className="w-[18px] h-[18px]" strokeWidth={1.5} />
             <span className="text-[13px] font-medium">Log Out</span>
           </button>
@@ -98,7 +98,12 @@ const ProfilePage = () => {
 
         {/* Listings */}
         <section className="px-4 pb-6">
-          <h3 className="text-[15px] font-semibold text-foreground mb-3">Your Listings</h3>
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-[15px] font-semibold text-foreground">Your Listings</h3>
+            <button className="text-[12px] text-muted-foreground hover:text-foreground transition-colors">
+              See all
+            </button>
+          </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-3 gap-y-5">
             {mockProducts.slice(0, 4).map((product) => (
               <ProductCard key={product.id} product={product} />

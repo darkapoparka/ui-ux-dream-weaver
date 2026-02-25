@@ -6,33 +6,33 @@ const Header = () => {
     <header className="sticky top-0 z-40 bg-card/95 backdrop-blur-md border-b border-border">
       <div className="max-w-7xl mx-auto flex items-center justify-between h-12 px-4">
         {/* Left */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
           <button className="md:hidden -ml-1">
             <Menu className="w-5 h-5 text-foreground" strokeWidth={1.5} />
           </button>
-          <Link to="/" className="text-lg font-extrabold font-display text-foreground tracking-tight">
+          <Link to="/" className="text-[17px] font-extrabold font-display text-foreground tracking-tight">
             treido.
           </Link>
         </div>
 
         {/* Center — Desktop nav */}
         <nav className="hidden md:flex items-center gap-6">
-          <Link to="/categories" className="text-[13px] font-medium text-foreground hover:text-muted-foreground transition-colors">
+          <Link to="/categories" className="text-[13px] font-medium text-muted-foreground hover:text-foreground transition-colors">
             Browse
           </Link>
-          <Link to="/categories" className="text-[13px] font-medium text-foreground hover:text-muted-foreground transition-colors">
+          <Link to="/categories" className="text-[13px] font-medium text-muted-foreground hover:text-foreground transition-colors">
             Electronics
           </Link>
-          <Link to="/categories" className="text-[13px] font-medium text-foreground hover:text-muted-foreground transition-colors">
+          <Link to="/categories" className="text-[13px] font-medium text-muted-foreground hover:text-foreground transition-colors">
             Fashion
           </Link>
-          <Link to="/categories" className="text-[13px] font-medium text-foreground hover:text-muted-foreground transition-colors">
+          <Link to="/categories" className="text-[13px] font-medium text-muted-foreground hover:text-foreground transition-colors">
             Home
           </Link>
         </nav>
 
         {/* Right */}
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-0.5">
           <Link to="/search" className="p-2 hover:bg-secondary rounded-full transition-colors">
             <Search className="w-[18px] h-[18px] text-foreground" strokeWidth={1.5} />
           </Link>
