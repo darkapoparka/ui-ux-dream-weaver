@@ -19,28 +19,19 @@ const CategoriesPage = () => {
       <Header />
 
       <main className="max-w-7xl mx-auto">
-        {/* Title */}
-        <div className="flex items-center justify-between px-4 pt-4 pb-2">
-          <div className="flex items-center gap-2">
-            <Link to="/" className="md:hidden">
-              <ArrowLeft className="w-5 h-5 text-foreground" strokeWidth={1.5} />
-            </Link>
-            <h2 className="text-lg font-bold font-display text-foreground">Browse</h2>
-          </div>
-          <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-secondary text-[13px] font-medium text-secondary-foreground hover:bg-accent transition-colors">
-            <SlidersHorizontal className="w-3.5 h-3.5" />
-            Filter
-          </button>
-        </div>
-
-        {/* Category list */}
-        <div className="px-4 pb-3">
-          <div className="flex gap-1.5 overflow-x-auto scrollbar-hide">
+        {/* Category chips */}
+        <div className="px-4 pt-3 pb-2">
+          <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide">
+            <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border text-[13px] font-medium text-foreground hover:bg-secondary transition-colors flex-shrink-0">
+              <SlidersHorizontal className="w-3.5 h-3.5" />
+              Filter
+            </button>
+            <div className="w-px h-5 bg-border flex-shrink-0" />
             <CategoryChip label="All" active={!active} onClick={() => setActive(null)} />
             {categories.map((cat) => (
               <CategoryChip
                 key={cat.name}
-                label={`${cat.name}`}
+                label={cat.name}
                 active={active === cat.name}
                 onClick={() => setActive(active === cat.name ? null : cat.name)}
               />
@@ -49,9 +40,9 @@ const CategoriesPage = () => {
         </div>
 
         {/* Count */}
-        <div className="px-4 pb-3">
-          <p className="text-[13px] text-muted-foreground">
-            {filtered.length} listings{active ? ` in ${active}` : ""}
+        <div className="px-4 pb-2 pt-1">
+          <p className="text-[12px] text-muted-foreground">
+            {filtered.length} listing{filtered.length !== 1 ? "s" : ""}{active ? ` in ${active}` : ""}
           </p>
         </div>
 
@@ -64,7 +55,7 @@ const CategoriesPage = () => {
           </div>
           {filtered.length === 0 && (
             <div className="py-20 text-center">
-              <p className="text-sm text-muted-foreground">No listings in this category yet.</p>
+              <p className="text-[13px] text-muted-foreground">No listings in this category yet.</p>
             </div>
           )}
         </section>
