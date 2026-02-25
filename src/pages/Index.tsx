@@ -27,14 +27,14 @@ const Index = () => {
 
       <main className="max-w-7xl mx-auto">
         {/* Categories */}
-        <section className="px-4 pt-4 pb-2">
+        <section className="px-4 pt-4 pb-3">
           <div className="flex items-center justify-between mb-3">
             <h2 className="text-[15px] font-semibold text-foreground">Categories</h2>
-            <Link to="/categories" className="text-[13px] text-muted-foreground hover:text-foreground transition-colors flex items-center gap-0.5">
-              All <ChevronRight className="w-3.5 h-3.5" />
+            <Link to="/categories" className="text-[12px] text-muted-foreground hover:text-foreground transition-colors flex items-center gap-0.5">
+              See all <ChevronRight className="w-3 h-3" />
             </Link>
           </div>
-          <div className="flex gap-3 overflow-x-auto scrollbar-hide">
+          <div className="flex gap-4 overflow-x-auto scrollbar-hide pb-1">
             {quickCategories.map((cat) => {
               const Icon = cat.icon;
               return (
@@ -43,32 +43,34 @@ const Index = () => {
                   to="/categories"
                   className="flex flex-col items-center gap-1.5 flex-shrink-0 group"
                 >
-                  <div className="w-14 h-14 rounded-2xl bg-secondary flex items-center justify-center group-hover:bg-accent transition-colors">
-                    <Icon className="w-5 h-5 text-foreground" strokeWidth={1.5} />
+                  <div className="w-[52px] h-[52px] rounded-xl bg-secondary flex items-center justify-center group-hover:bg-accent transition-colors">
+                    <Icon className="w-5 h-5 text-foreground/70" strokeWidth={1.5} />
                   </div>
-                  <span className="text-[11px] font-medium text-muted-foreground">{cat.name}</span>
+                  <span className="text-[10px] font-medium text-muted-foreground group-hover:text-foreground transition-colors">{cat.name}</span>
                 </Link>
               );
             })}
           </div>
         </section>
 
-        {/* Tabs */}
-        <section className="px-4 py-3">
-          <div className="flex gap-1.5 overflow-x-auto scrollbar-hide">
-            {tabs.map((tab) => (
-              <CategoryChip
-                key={tab}
-                label={tab}
-                active={activeTab === tab}
-                onClick={() => setActiveTab(tab)}
-              />
-            ))}
-          </div>
-        </section>
+        {/* Divider + Tabs */}
+        <div className="border-t border-border">
+          <section className="px-4 py-2.5">
+            <div className="flex gap-1 overflow-x-auto scrollbar-hide">
+              {tabs.map((tab) => (
+                <CategoryChip
+                  key={tab}
+                  label={tab}
+                  active={activeTab === tab}
+                  onClick={() => setActiveTab(tab)}
+                />
+              ))}
+            </div>
+          </section>
+        </div>
 
         {/* Products */}
-        <section className="px-4 pb-6">
+        <section className="px-4 pb-6 pt-1">
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-3 gap-y-5">
             {mockProducts.map((product) => (
               <ProductCard key={product.id} product={product} />

@@ -8,10 +8,10 @@ const CategoryChip = ({ label, active = false, onClick }: CategoryChipProps) => 
   return (
     <button
       onClick={onClick}
-      className={`px-3.5 py-1.5 rounded-full text-[13px] font-medium whitespace-nowrap transition-colors ${
+      className={`px-3.5 py-1.5 rounded-full text-[13px] font-medium whitespace-nowrap transition-all ${
         active
-          ? "bg-primary text-primary-foreground"
-          : "bg-secondary text-secondary-foreground hover:bg-accent"
+          ? "bg-foreground text-background"
+          : "bg-secondary text-muted-foreground hover:text-foreground hover:bg-accent"
       }`}
     >
       {label}
