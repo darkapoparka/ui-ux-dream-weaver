@@ -2,20 +2,18 @@ interface CategoryChipProps {
   label: string;
   active?: boolean;
   onClick?: () => void;
-  icon?: React.ReactNode;
 }
 
-const CategoryChip = ({ label, active = false, onClick, icon }: CategoryChipProps) => {
+const CategoryChip = ({ label, active = false, onClick }: CategoryChipProps) => {
   return (
     <button
       onClick={onClick}
-      className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-200 ${
+      className={`px-3.5 py-1.5 rounded-full text-[13px] font-medium whitespace-nowrap transition-colors ${
         active
-          ? "bg-primary text-primary-foreground shadow-glow"
-          : "bg-card text-secondary-foreground border border-border hover:border-primary/30 hover:bg-primary/5"
+          ? "bg-primary text-primary-foreground"
+          : "bg-secondary text-secondary-foreground hover:bg-accent"
       }`}
     >
-      {icon}
       {label}
     </button>
   );

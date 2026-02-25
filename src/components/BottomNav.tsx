@@ -1,11 +1,11 @@
-import { Home, Grid3X3, Plus, MessageCircle, User } from "lucide-react";
+import { Home, Search, Plus, MessageCircle, User } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
-const navItems = [
+const items = [
   { icon: Home, label: "Home", path: "/" },
-  { icon: Grid3X3, label: "Categories", path: "/categories" },
-  { icon: Plus, label: "Sell", path: "#", isCenter: true },
-  { icon: MessageCircle, label: "Chat", path: "/search" },
+  { icon: Search, label: "Search", path: "/search" },
+  { icon: Plus, label: "Sell", path: "#", center: true },
+  { icon: MessageCircle, label: "Messages", path: "#" },
   { icon: User, label: "Profile", path: "/profile" },
 ];
 
@@ -13,20 +13,20 @@ const BottomNav = () => {
   const { pathname } = useLocation();
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-card border-t border-border shadow-sticky safe-bottom md:hidden">
-      <div className="flex items-center justify-around h-16 px-2">
-        {navItems.map((item) => {
-          const isActive = pathname === item.path;
+    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-card border-t border-border safe-bottom md:hidden">
+      <div className="flex items-center justify-around h-14">
+        {items.map((item) => {
+          const active = pathname === item.path;
           const Icon = item.icon;
 
-          if (item.isCenter) {
+          if (item.center) {
             return (
               <Link
                 key={item.label}
                 to={item.path}
-                className="flex items-center justify-center w-12 h-12 -mt-5 rounded-full bg-primary shadow-glow text-primary-foreground transition-transform active:scale-95 hover:brightness-110"
+                className="flex items-center justify-center w-10 h-10 rounded-full bg-primary text-primary-foreground -mt-3"
               >
-                <Icon className="w-6 h-6" />
+                <Icon className="w-5 h-5" />
               </Link>
             );
           }
@@ -35,12 +35,12 @@ const BottomNav = () => {
             <Link
               key={item.label}
               to={item.path}
-              className={`flex flex-col items-center gap-0.5 px-3 py-1 transition-colors ${
-                isActive ? "text-primary" : "text-muted-foreground"
+              className={`flex flex-col items-center gap-0.5 text-[10px] font-medium transition-colors ${
+                active ? "text-foreground" : "text-muted-foreground"
               }`}
             >
-              <Icon className={`w-5 h-5 ${isActive ? "stroke-[2.5px]" : ""}`} />
-              <span className="text-[10px] font-medium">{item.label}</span>
+              <Icon className="w-5 h-5" strokeWidth={active ? 2.2 : 1.5} />
+              {item.label}
             </Link>
           );
         })}
