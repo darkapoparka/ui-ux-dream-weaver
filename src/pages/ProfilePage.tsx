@@ -1,16 +1,13 @@
-import { motion } from "framer-motion";
 import {
   Settings,
   Heart,
   Package,
   Star,
   MapPin,
-  Calendar,
   ChevronRight,
   Shield,
   LogOut,
-  Edit3,
-  Camera,
+  HelpCircle,
 } from "lucide-react";
 import Header from "@/components/Header";
 import BottomNav from "@/components/BottomNav";
@@ -21,126 +18,94 @@ const stats = [
   { label: "Listed", value: "24" },
   { label: "Sold", value: "18" },
   { label: "Rating", value: "4.9" },
-  { label: "Reviews", value: "87" },
 ];
 
-const menuItems = [
-  { icon: Package, label: "My Listings", badge: "24" },
-  { icon: Heart, label: "Wishlist", badge: "8" },
-  { icon: Star, label: "Reviews" },
-  { icon: Shield, label: "Verification", badge: "✓" },
+const menu = [
+  { icon: Package, label: "My Listings", detail: "24 active" },
+  { icon: Heart, label: "Saved", detail: "8 items" },
+  { icon: Star, label: "Reviews", detail: "87" },
   { icon: Settings, label: "Settings" },
-  { icon: LogOut, label: "Log Out" },
+  { icon: HelpCircle, label: "Help" },
 ];
 
 const ProfilePage = () => {
   return (
-    <div className="min-h-screen bg-background pb-20 md:pb-0">
+    <div className="min-h-screen bg-background pb-16 md:pb-0">
       <Header />
 
-      {/* Profile Header */}
-      <section className="px-4 pt-6 pb-4">
-        <div className="container max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="bg-card rounded-2xl shadow-card p-5 md:p-8"
-          >
-            <div className="flex items-start gap-4">
-              {/* Avatar */}
-              <div className="relative flex-shrink-0">
-                <div className="w-20 h-20 md:w-24 md:h-24 rounded-2xl bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center text-2xl md:text-3xl font-extrabold text-primary-foreground font-display shadow-glow">
-                  TR
-                </div>
-                <button className="absolute -bottom-1 -right-1 w-7 h-7 rounded-full bg-card border-2 border-background flex items-center justify-center shadow-card">
-                  <Camera className="w-3.5 h-3.5 text-muted-foreground" />
-                </button>
-              </div>
-
-              {/* Info */}
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-0.5">
-                  <h2 className="text-xl font-bold font-display text-foreground truncate">treido</h2>
-                  <Shield className="w-4 h-4 text-primary flex-shrink-0" />
-                </div>
-                <p className="text-sm text-muted-foreground mb-2">
-                  Verified seller since 2024
-                </p>
-                <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                  <span className="flex items-center gap-1">
-                    <MapPin className="w-3 h-3" /> Sofia, Bulgaria
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <Calendar className="w-3 h-3" /> Joined Jan 2024
-                  </span>
-                </div>
-              </div>
-
-              <button className="p-2 rounded-full hover:bg-secondary transition-colors flex-shrink-0">
-                <Edit3 className="w-4 h-4 text-muted-foreground" />
-              </button>
+      <main className="max-w-7xl mx-auto">
+        {/* Profile card */}
+        <section className="px-4 pt-5 pb-4">
+          <div className="flex items-center gap-3.5">
+            <div className="w-14 h-14 rounded-full bg-secondary flex items-center justify-center text-base font-bold text-secondary-foreground">
+              TR
             </div>
-
-            {/* Stats */}
-            <div className="grid grid-cols-4 gap-3 mt-5 pt-5 border-t border-border">
-              {stats.map((stat) => (
-                <div key={stat.label} className="text-center">
-                  <p className="text-lg font-bold font-display text-foreground">{stat.value}</p>
-                  <p className="text-[11px] text-muted-foreground font-medium">{stat.label}</p>
-                </div>
-              ))}
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-1.5">
+                <h2 className="text-[15px] font-bold text-foreground">treido</h2>
+                <Shield className="w-3.5 h-3.5 text-success" />
+              </div>
+              <div className="flex items-center gap-2 text-[12px] text-muted-foreground mt-0.5">
+                <span className="flex items-center gap-0.5">
+                  <MapPin className="w-3 h-3" /> Sofia
+                </span>
+                <span>·</span>
+                <span>Joined 2024</span>
+              </div>
             </div>
-          </motion.div>
-        </div>
-      </section>
+            <button className="px-3 py-1.5 rounded-lg border border-border text-[13px] font-medium text-foreground hover:bg-secondary transition-colors">
+              Edit
+            </button>
+          </div>
 
-      {/* Menu */}
-      <section className="px-4 pb-4">
-        <div className="container max-w-7xl mx-auto">
-          <div className="bg-card rounded-2xl shadow-card overflow-hidden">
-            {menuItems.map((item, i) => {
+          {/* Stats */}
+          <div className="flex gap-6 mt-4 pt-4 border-t border-border">
+            {stats.map((s) => (
+              <div key={s.label}>
+                <p className="text-[15px] font-bold text-foreground">{s.value}</p>
+                <p className="text-[11px] text-muted-foreground">{s.label}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Menu */}
+        <section className="px-4 pb-4">
+          <div className="border border-border rounded-xl overflow-hidden bg-card divide-y divide-border">
+            {menu.map((item) => {
               const Icon = item.icon;
-              const isLast = i === menuItems.length - 1;
               return (
-                <motion.button
+                <button
                   key={item.label}
-                  initial={{ opacity: 0, x: -8 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.1 + i * 0.04 }}
-                  className={`flex items-center gap-3 w-full px-5 py-3.5 text-left hover:bg-secondary/50 transition-colors ${
-                    !isLast ? "border-b border-border" : ""
-                  } ${isLast ? "text-destructive" : "text-foreground"}`}
+                  className="flex items-center gap-3 w-full px-4 py-3 text-left hover:bg-secondary/50 transition-colors"
                 >
-                  <Icon className={`w-5 h-5 ${isLast ? "text-destructive" : "text-muted-foreground"}`} />
-                  <span className="flex-1 text-sm font-medium">{item.label}</span>
-                  {item.badge && (
-                    <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
-                      item.badge === "✓"
-                        ? "bg-success/10 text-success"
-                        : "bg-secondary text-secondary-foreground"
-                    }`}>
-                      {item.badge}
-                    </span>
+                  <Icon className="w-[18px] h-[18px] text-muted-foreground" strokeWidth={1.5} />
+                  <span className="flex-1 text-[13px] font-medium text-foreground">{item.label}</span>
+                  {item.detail && (
+                    <span className="text-[12px] text-muted-foreground">{item.detail}</span>
                   )}
-                  {!isLast && <ChevronRight className="w-4 h-4 text-muted-foreground" />}
-                </motion.button>
+                  <ChevronRight className="w-4 h-4 text-muted-foreground" strokeWidth={1.5} />
+                </button>
               );
             })}
           </div>
-        </div>
-      </section>
 
-      {/* User's Listings */}
-      <section className="px-4 py-4">
-        <div className="container max-w-7xl mx-auto">
-          <h3 className="text-base font-bold font-display text-foreground mb-3">My Listings</h3>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-4">
-            {mockProducts.slice(0, 4).map((product, i) => (
-              <ProductCard key={product.id} product={product} index={i} />
+          <button className="flex items-center gap-3 w-full px-4 py-3 mt-2 text-left text-destructive hover:bg-destructive/5 rounded-xl transition-colors">
+            <LogOut className="w-[18px] h-[18px]" strokeWidth={1.5} />
+            <span className="text-[13px] font-medium">Log Out</span>
+          </button>
+        </section>
+
+        {/* Listings */}
+        <section className="px-4 pb-6">
+          <h3 className="text-[15px] font-semibold text-foreground mb-3">Your Listings</h3>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-3 gap-y-5">
+            {mockProducts.slice(0, 4).map((product) => (
+              <ProductCard key={product.id} product={product} />
             ))}
           </div>
-        </div>
-      </section>
+        </section>
+      </main>
 
       <BottomNav />
     </div>

@@ -1,23 +1,19 @@
 import { useState, useRef, useEffect } from "react";
-import { motion } from "framer-motion";
-import { Search, ArrowLeft, X, Clock, TrendingUp, SlidersHorizontal } from "lucide-react";
+import { Search, ArrowLeft, X, Clock, TrendingUp } from "lucide-react";
 import { Link } from "react-router-dom";
 import BottomNav from "@/components/BottomNav";
 import ProductCard from "@/components/ProductCard";
 import CategoryChip from "@/components/CategoryChip";
 import { mockProducts } from "@/data/mockData";
 
-const recentSearches = ["iPhone 15", "BMW", "Gaming Chair", "MacBook Pro"];
-const trendingSearches = ["PlayStation 5", "Air Jordan", "Dyson", "Samsung TV", "Rolex"];
+const recent = ["iPhone 15", "BMW", "Gaming Chair", "MacBook Pro"];
+const trending = ["PlayStation 5", "Air Jordan", "Dyson", "Samsung TV", "Rolex"];
 
 const SearchPage = () => {
   const [query, setQuery] = useState("");
-  const [showResults, setShowResults] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    inputRef.current?.focus();
-  }, []);
+  useEffect(() => { inputRef.current?.focus(); }, []);
 
   const results = query
     ? mockProducts.filter(
@@ -27,114 +23,110 @@ const SearchPage = () => {
       )
     : [];
 
+  const hasQuery = query.length > 0;
+
   return (
-    <div className="min-h-screen bg-background pb-20 md:pb-0">
-      {/* Search Header */}
+    <div className="min-h-screen bg-background pb-16 md:pb-0">
+      {/* Search header */}
       <header className="sticky top-0 z-40 bg-card border-b border-border">
-        <div className="flex items-center gap-3 h-14 px-4 container max-w-7xl mx-auto">
-          <Link to="/" className="p-1 rounded-full hover:bg-secondary transition-colors">
-            <ArrowLeft className="w-5 h-5 text-foreground" />
+        <div className="max-w-7xl mx-auto flex items-center gap-2 h-12 px-4">
+          <Link to="/" className="-ml-1">
+            <ArrowLeft className="w-5 h-5 text-foreground" strokeWidth={1.5} />
           </Link>
-          <div className="flex-1 flex items-center gap-2 px-4 h-10 rounded-full bg-secondary/80 border border-border focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 focus-within:bg-card transition-all">
-            <Search className="w-4 h-4 text-muted-foreground flex-shrink-0" />
+          <div className="flex-1 flex items-center gap-2 h-9 px-3 rounded-lg bg-secondary focus-within:ring-1 focus-within:ring-ring transition-all">
+            <Search className="w-4 h-4 text-muted-foreground flex-shrink-0" strokeWidth={1.5} />
             <input
               ref={inputRef}
               type="text"
               value={query}
-              onChange={(e) => {
-                setQuery(e.target.value);
-                setShowResults(e.target.value.length > 0);
-              }}
-              placeholder="Search products, brands..."
-              className="flex-1 bg-transparent text-sm text-foreground placeholder:text-muted-foreground outline-none"
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search on treido"
+              className="flex-1 bg-transparent text-[13px] text-foreground placeholder:text-muted-foreground outline-none"
             />
             {query && (
-              <button onClick={() => { setQuery(""); setShowResults(false); }}>
+              <button onClick={() => setQuery("")}>
                 <X className="w-4 h-4 text-muted-foreground" />
               </button>
             )}
           </div>
-          <button className="p-2 rounded-full hover:bg-secondary transition-colors">
-            <SlidersHorizontal className="w-5 h-5 text-foreground" />
-          </button>
         </div>
       </header>
 
-      {!showResults ? (
-        <div className="container max-w-7xl mx-auto px-4 py-6">
-          {/* Recent Searches */}
-          <motion.section initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mb-8">
-            <div className="flex items-center justify-between mb-3">
-              <h3 className="text-sm font-bold text-foreground font-display flex items-center gap-2">
-                <Clock className="w-4 h-4 text-muted-foreground" /> Recent Searches
-              </h3>
-              <button className="text-xs text-primary font-medium">Clear All</button>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {recentSearches.map((s) => (
-                <button
-                  key={s}
-                  onClick={() => { setQuery(s); setShowResults(true); }}
-                  className="px-3 py-1.5 rounded-full bg-card border border-border text-sm text-foreground hover:bg-secondary transition-colors"
-                >
-                  {s}
+      <main className="max-w-7xl mx-auto px-4">
+        {!hasQuery ? (
+          <>
+            {/* Recent */}
+            <section className="pt-5 pb-4">
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="text-[13px] font-semibold text-foreground flex items-center gap-1.5">
+                  <Clock className="w-3.5 h-3.5 text-muted-foreground" strokeWidth={1.5} />
+                  Recent
+                </h3>
+                <button className="text-[12px] text-muted-foreground hover:text-foreground transition-colors">
+                  Clear
                 </button>
-              ))}
-            </div>
-          </motion.section>
-
-          {/* Trending */}
-          <motion.section initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
-            <h3 className="text-sm font-bold text-foreground font-display flex items-center gap-2 mb-3">
-              <TrendingUp className="w-4 h-4 text-primary" /> Trending Now
-            </h3>
-            <div className="space-y-1">
-              {trendingSearches.map((s, i) => (
-                <button
-                  key={s}
-                  onClick={() => { setQuery(s); setShowResults(true); }}
-                  className="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl hover:bg-card transition-colors text-left"
-                >
-                  <span className="text-xs font-bold text-muted-foreground w-5">{i + 1}</span>
-                  <span className="text-sm font-medium text-foreground">{s}</span>
-                </button>
-              ))}
-            </div>
-          </motion.section>
-        </div>
-      ) : (
-        <div className="container max-w-7xl mx-auto px-4 py-4">
-          {/* Filter chips */}
-          <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-3">
-            <CategoryChip label="All" active />
-            <CategoryChip label="Electronics" />
-            <CategoryChip label="Fashion" />
-            <CategoryChip label="Home" />
-          </div>
-
-          <p className="text-sm text-muted-foreground mb-3">
-            {results.length} results for "{query}"
-          </p>
-
-          {results.length > 0 ? (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-4">
-              {results.map((product, i) => (
-                <ProductCard key={product.id} product={product} index={i} />
-              ))}
-            </div>
-          ) : (
-            <div className="flex flex-col items-center justify-center py-20 text-center">
-              <div className="w-16 h-16 rounded-full bg-secondary flex items-center justify-center mb-4">
-                <Search className="w-7 h-7 text-muted-foreground" />
               </div>
-              <h3 className="text-base font-semibold text-foreground mb-1">No results found</h3>
-              <p className="text-sm text-muted-foreground max-w-xs">
-                Try different keywords or browse our categories.
-              </p>
+              <div className="flex flex-wrap gap-1.5">
+                {recent.map((s) => (
+                  <button
+                    key={s}
+                    onClick={() => setQuery(s)}
+                    className="px-3 py-1.5 rounded-full bg-secondary text-[13px] text-secondary-foreground hover:bg-accent transition-colors"
+                  >
+                    {s}
+                  </button>
+                ))}
+              </div>
+            </section>
+
+            {/* Trending */}
+            <section className="pb-4">
+              <h3 className="text-[13px] font-semibold text-foreground flex items-center gap-1.5 mb-2">
+                <TrendingUp className="w-3.5 h-3.5 text-muted-foreground" strokeWidth={1.5} />
+                Trending
+              </h3>
+              <div className="divide-y divide-border">
+                {trending.map((s, i) => (
+                  <button
+                    key={s}
+                    onClick={() => setQuery(s)}
+                    className="flex items-center gap-3 w-full py-2.5 text-left hover:bg-secondary/50 transition-colors -mx-1 px-1 rounded"
+                  >
+                    <span className="text-[12px] font-semibold text-muted-foreground w-4 text-center">{i + 1}</span>
+                    <span className="text-[13px] text-foreground">{s}</span>
+                  </button>
+                ))}
+              </div>
+            </section>
+          </>
+        ) : (
+          <>
+            {/* Filter chips */}
+            <div className="flex gap-1.5 pt-3 pb-2 overflow-x-auto scrollbar-hide">
+              <CategoryChip label="All" active />
+              <CategoryChip label="Electronics" />
+              <CategoryChip label="Fashion" />
+              <CategoryChip label="Home" />
             </div>
-          )}
-        </div>
-      )}
+
+            <p className="text-[13px] text-muted-foreground py-2">
+              {results.length} result{results.length !== 1 ? "s" : ""} for "{query}"
+            </p>
+
+            {results.length > 0 ? (
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-3 gap-y-5 pb-6">
+                {results.map((product) => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
+              </div>
+            ) : (
+              <div className="py-20 text-center">
+                <p className="text-[13px] text-muted-foreground">No results found. Try something different.</p>
+              </div>
+            )}
+          </>
+        )}
+      </main>
 
       <BottomNav />
     </div>
