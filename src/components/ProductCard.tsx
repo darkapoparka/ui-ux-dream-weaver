@@ -18,11 +18,16 @@ export interface Product {
   condition?: "New" | "Used" | "Like New";
 }
 
-const ProductCard = ({ product }: { product: Product }) => {
+interface ProductCardProps {
+  product: Product;
+  preventNavigation?: boolean;
+}
+
+const ProductCard = ({ product, preventNavigation = false }: ProductCardProps) => {
   const [liked, setLiked] = useState(false);
 
-  return (
-    <Link to={`/product/${product.id}`} className="group block">
+  const content = (
+    <>
       {/* Image */}
       <div className="relative aspect-[3/4] overflow-hidden rounded-lg bg-secondary mb-2">
         <img
@@ -84,6 +89,16 @@ const ProductCard = ({ product }: { product: Product }) => {
           )}
         </div>
       </div>
+    </>
+  );
+
+  if (preventNavigation) {
+    return <div className="group block cursor-pointer">{content}</div>;
+  }
+
+  return (
+    <Link to={`/product/${product.id}`} className="group block">
+      {content}
     </Link>
   );
 };

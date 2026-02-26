@@ -20,13 +20,13 @@ const Header = () => {
           <Link to="/categories" className="text-[13px] font-medium text-muted-foreground hover:text-foreground transition-colors">
             Browse
           </Link>
-          <Link to="/categories" className="text-[13px] font-medium text-muted-foreground hover:text-foreground transition-colors">
+          <Link to="/categories/electronics" className="text-[13px] font-medium text-muted-foreground hover:text-foreground transition-colors">
             Electronics
           </Link>
-          <Link to="/categories" className="text-[13px] font-medium text-muted-foreground hover:text-foreground transition-colors">
+          <Link to="/categories/fashion" className="text-[13px] font-medium text-muted-foreground hover:text-foreground transition-colors">
             Fashion
           </Link>
-          <Link to="/categories" className="text-[13px] font-medium text-muted-foreground hover:text-foreground transition-colors">
+          <Link to="/categories/home" className="text-[13px] font-medium text-muted-foreground hover:text-foreground transition-colors">
             Home
           </Link>
         </nav>
