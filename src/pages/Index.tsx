@@ -26,21 +26,21 @@ const Index = () => {
       <Header />
 
       <main className="max-w-7xl mx-auto">
-        {/* Quick category icons — no heading, just icons */}
-        <section className="px-4 pt-3 pb-2">
-          <div className="flex justify-between">
+        {/* Category icons */}
+        <section className="px-4 pt-3 pb-3">
+          <div className="grid grid-cols-6 gap-0">
             {quickCategories.map((cat) => {
               const Icon = cat.icon;
               return (
                 <Link
                   key={cat.name}
                   to={`/categories/${cat.slug}`}
-                  className="flex flex-col items-center gap-1.5 group"
+                  className="flex flex-col items-center gap-1 py-1"
                 >
-                  <div className="w-[50px] h-[50px] rounded-2xl bg-secondary flex items-center justify-center group-active:bg-accent">
-                    <Icon className="w-5 h-5 text-foreground/70" strokeWidth={1.5} />
+                  <div className="w-12 h-12 rounded-2xl bg-secondary flex items-center justify-center active:bg-accent">
+                    <Icon className="w-[20px] h-[20px] text-foreground/70" strokeWidth={1.5} />
                   </div>
-                  <span className="text-[10px] font-medium text-muted-foreground">{cat.name}</span>
+                  <span className="text-[10px] font-medium text-muted-foreground leading-none">{cat.name}</span>
                 </Link>
               );
             })}
@@ -48,9 +48,9 @@ const Index = () => {
         </section>
 
         {/* Feed tabs */}
-        <div className="border-t border-border">
-          <section className="px-4 py-2">
-            <div className="flex gap-1 overflow-x-auto scrollbar-hide">
+        <div className="border-t border-border/60">
+          <div className="px-4 py-2">
+            <div className="flex gap-1.5 overflow-x-auto scrollbar-hide">
               {tabs.map((tab) => (
                 <CategoryChip
                   key={tab}
@@ -60,12 +60,12 @@ const Index = () => {
                 />
               ))}
             </div>
-          </section>
+          </div>
         </div>
 
         {/* Products */}
         <section className="px-4 pb-6 pt-1">
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-3 gap-y-5">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-2.5 gap-y-4">
             {mockProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
