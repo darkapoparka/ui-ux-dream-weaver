@@ -1,45 +1,32 @@
-import { Search, Heart, ShoppingBag, Menu } from "lucide-react";
+import { Search, Heart, ShoppingBag } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
-    <header className="sticky top-0 z-40 bg-card/95 backdrop-blur-md border-b border-border">
-      <div className="max-w-7xl mx-auto flex items-center justify-between h-12 px-4">
-        {/* Left */}
-        <div className="flex items-center gap-3">
-          <button className="md:hidden -ml-1">
-            <Menu className="w-5 h-5 text-foreground" strokeWidth={1.5} />
-          </button>
-          <Link to="/" className="text-[17px] font-extrabold font-display text-foreground tracking-tight">
-            treido.
-          </Link>
-        </div>
+    <header className="sticky top-0 z-40 bg-card/98 backdrop-blur-xl border-b border-border/60">
+      <div className="max-w-7xl mx-auto flex items-center justify-between h-11 px-4">
+        {/* Logo */}
+        <Link to="/" className="text-[17px] font-extrabold font-display text-foreground tracking-tight">
+          treido.
+        </Link>
 
-        {/* Center — Desktop nav */}
+        {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-6">
-          <Link to="/categories" className="text-[13px] font-medium text-muted-foreground hover:text-foreground transition-colors">
-            Browse
-          </Link>
-          <Link to="/categories/electronics" className="text-[13px] font-medium text-muted-foreground hover:text-foreground transition-colors">
-            Electronics
-          </Link>
-          <Link to="/categories/fashion" className="text-[13px] font-medium text-muted-foreground hover:text-foreground transition-colors">
-            Fashion
-          </Link>
-          <Link to="/categories/home" className="text-[13px] font-medium text-muted-foreground hover:text-foreground transition-colors">
-            Home
-          </Link>
+          <Link to="/categories" className="text-[13px] font-medium text-muted-foreground hover:text-foreground">Browse</Link>
+          <Link to="/categories/electronics" className="text-[13px] font-medium text-muted-foreground hover:text-foreground">Electronics</Link>
+          <Link to="/categories/fashion" className="text-[13px] font-medium text-muted-foreground hover:text-foreground">Fashion</Link>
+          <Link to="/categories/home" className="text-[13px] font-medium text-muted-foreground hover:text-foreground">Home</Link>
         </nav>
 
-        {/* Right */}
-        <div className="flex items-center gap-0.5">
-          <Link to="/search" className="p-2 hover:bg-secondary rounded-full transition-colors">
+        {/* Right icons */}
+        <div className="flex items-center gap-0">
+          <Link to="/search" className="p-2 rounded-full active:bg-secondary">
             <Search className="w-[18px] h-[18px] text-foreground" strokeWidth={1.5} />
           </Link>
-          <Link to="/profile" className="p-2 hover:bg-secondary rounded-full transition-colors">
+          <Link to="/profile" className="p-2 rounded-full active:bg-secondary">
             <Heart className="w-[18px] h-[18px] text-foreground" strokeWidth={1.5} />
           </Link>
-          <button className="p-2 hover:bg-secondary rounded-full transition-colors relative">
+          <button className="p-2 rounded-full active:bg-secondary relative">
             <ShoppingBag className="w-[18px] h-[18px] text-foreground" strokeWidth={1.5} />
             <span className="absolute top-1 right-1 w-3.5 h-3.5 bg-brand text-brand-foreground text-[8px] font-bold rounded-full flex items-center justify-center">
               2
@@ -48,11 +35,11 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Mobile search bar */}
-      <div className="md:hidden px-4 pb-2.5">
+      {/* Mobile search */}
+      <div className="md:hidden px-4 pb-2">
         <Link
           to="/search"
-          className="flex items-center gap-2 h-9 px-3 rounded-lg bg-secondary text-[13px] text-muted-foreground"
+          className="flex items-center gap-2 h-9 px-3 rounded-xl bg-secondary text-[13px] text-muted-foreground"
         >
           <Search className="w-4 h-4" strokeWidth={1.5} />
           Search on treido
