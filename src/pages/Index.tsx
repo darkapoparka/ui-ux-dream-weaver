@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChevronRight, Laptop, Shirt, Sofa, Car, Gamepad2, Dumbbell } from "lucide-react";
+import { Laptop, Shirt, Sofa, Car, Gamepad2, Dumbbell } from "lucide-react";
 import Header from "@/components/Header";
 import BottomNav from "@/components/BottomNav";
 import ProductCard from "@/components/ProductCard";
@@ -10,52 +10,46 @@ import { Link } from "react-router-dom";
 const tabs = ["For You", "Newest", "Trending", "Deals"];
 
 const quickCategories = [
-  { name: "Electronics", icon: Laptop },
-  { name: "Fashion", icon: Shirt },
-  { name: "Home", icon: Sofa },
-  { name: "Automotive", icon: Car },
-  { name: "Gaming", icon: Gamepad2 },
-  { name: "Sports", icon: Dumbbell },
+  { name: "Electronics", slug: "electronics", icon: Laptop },
+  { name: "Fashion", slug: "fashion", icon: Shirt },
+  { name: "Home", slug: "home", icon: Sofa },
+  { name: "Auto", slug: "automotive", icon: Car },
+  { name: "Gaming", slug: "gaming", icon: Gamepad2 },
+  { name: "Sports", slug: "sports", icon: Dumbbell },
 ];
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState("For You");
 
   return (
-    <div className="min-h-screen bg-background pb-16 md:pb-0">
+    <div className="min-h-screen bg-background pb-20 md:pb-0">
       <Header />
 
       <main className="max-w-7xl mx-auto">
-        {/* Categories */}
-        <section className="px-4 pt-4 pb-3">
-          <div className="flex items-center justify-between mb-3">
-            <h2 className="text-[15px] font-semibold text-foreground">Categories</h2>
-            <Link to="/categories" className="text-[12px] text-muted-foreground hover:text-foreground transition-colors flex items-center gap-0.5">
-              See all <ChevronRight className="w-3 h-3" />
-            </Link>
-          </div>
-          <div className="flex gap-4 overflow-x-auto scrollbar-hide pb-1">
+        {/* Quick category icons — no heading, just icons */}
+        <section className="px-4 pt-3 pb-2">
+          <div className="flex justify-between">
             {quickCategories.map((cat) => {
               const Icon = cat.icon;
               return (
                 <Link
                   key={cat.name}
-                  to="/categories"
-                  className="flex flex-col items-center gap-1.5 flex-shrink-0 group"
+                  to={`/categories/${cat.slug}`}
+                  className="flex flex-col items-center gap-1.5 group"
                 >
-                  <div className="w-[52px] h-[52px] rounded-xl bg-secondary flex items-center justify-center group-hover:bg-accent transition-colors">
+                  <div className="w-[50px] h-[50px] rounded-2xl bg-secondary flex items-center justify-center group-active:bg-accent">
                     <Icon className="w-5 h-5 text-foreground/70" strokeWidth={1.5} />
                   </div>
-                  <span className="text-[10px] font-medium text-muted-foreground group-hover:text-foreground transition-colors">{cat.name}</span>
+                  <span className="text-[10px] font-medium text-muted-foreground">{cat.name}</span>
                 </Link>
               );
             })}
           </div>
         </section>
 
-        {/* Divider + Tabs */}
+        {/* Feed tabs */}
         <div className="border-t border-border">
-          <section className="px-4 py-2.5">
+          <section className="px-4 py-2">
             <div className="flex gap-1 overflow-x-auto scrollbar-hide">
               {tabs.map((tab) => (
                 <CategoryChip
