@@ -122,7 +122,7 @@ const CategoriesPage = () => {
 
       <main className="max-w-7xl mx-auto">
         {/* ─── Sticky toolbar ─── */}
-        <div className="sticky top-[76px] md:top-11 z-30 bg-background/98 backdrop-blur-sm">
+        <div className="sticky top-[80px] md:top-[44px] z-30 bg-background/98 backdrop-blur-sm">
           {/* Back + category name when selected */}
           {active && (
             <div className="px-4 pt-2 pb-1 flex items-center gap-2">
