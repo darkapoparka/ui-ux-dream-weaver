@@ -10,14 +10,27 @@ import {
   Percent,
   Truck,
   CheckCircle2,
+  Laptop,
+  Shirt,
+  Sofa,
+  Car,
+  Gamepad2,
+  Dumbbell,
+  Sparkles,
+  Baby,
+  PawPrint,
+  Building2,
+  Code2,
+  ShoppingCart,
+  ChevronRight,
 } from "lucide-react";
 import Header from "@/components/Header";
 import BottomNav from "@/components/BottomNav";
 import ProductCard, { Product } from "@/components/ProductCard";
-import CategoryChip from "@/components/CategoryChip";
 import FilterDrawer, { FilterState } from "@/components/FilterDrawer";
 import SortDrawer, { sortOptions } from "@/components/SortDrawer";
 import ProductQuickView from "@/components/ProductQuickView";
+import ListProductCard from "@/components/ListProductCard";
 import { mockProducts, categories, subcategories } from "@/data/mockData";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -27,11 +40,34 @@ const unslugify = (slug: string) => {
   return found?.name || null;
 };
 
+const categoryIcons: Record<string, React.ElementType> = {
+  Electronics: Laptop,
+  Fashion: Shirt,
+  Home: Sofa,
+  Automotive: Car,
+  Gaming: Gamepad2,
+  Sports: Dumbbell,
+  Beauty: Sparkles,
+  Kids: Baby,
+  Pets: PawPrint,
+  "Real Estate": Building2,
+  Software: Code2,
+  Grocery: ShoppingCart,
+};
+
 const quickFilterOptions = [
   { key: "sale", label: "On Sale", icon: Percent },
   { key: "shipping", label: "Free Ship", icon: Truck },
   { key: "verified", label: "Verified", icon: CheckCircle2 },
 ];
+
+const emptyFilters: FilterState = {
+  conditions: [],
+  priceMin: "",
+  priceMax: "",
+  quickFilters: [],
+  brands: [],
+};
 
 const CategoriesPage = () => {
   const { slug } = useParams<{ slug?: string }>();
@@ -46,12 +82,7 @@ const CategoriesPage = () => {
   const [sortValue, setSortValue] = useState("newest");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
-  const [filters, setFilters] = useState<FilterState>({
-    conditions: [],
-    priceMin: "",
-    priceMax: "",
-    quickFilters: [],
-  });
+  const [filters, setFilters] = useState<FilterState>(emptyFilters);
 
   const toggleQuickFilter = (key: string) => {
     setFilters((prev) => ({
@@ -71,6 +102,8 @@ const CategoriesPage = () => {
         key: "price",
         label: `€${filters.priceMin || "0"} – €${filters.priceMax || "∞"}`,
       });
+    if (filters.brands.length > 0)
+      tags.push({ key: "brands", label: filters.brands.join(", ") });
     filters.quickFilters.forEach((qf) => {
       const opt = quickFilterOptions.find((o) => o.key === qf);
       if (opt) tags.push({ key: `quick-${qf}`, label: opt.label });
@@ -81,6 +114,7 @@ const CategoriesPage = () => {
   const removeFilterTag = (key: string) => {
     if (key === "conditions") setFilters((p) => ({ ...p, conditions: [] }));
     else if (key === "price") setFilters((p) => ({ ...p, priceMin: "", priceMax: "" }));
+    else if (key === "brands") setFilters((p) => ({ ...p, brands: [] }));
     else if (key.startsWith("quick-")) {
       const qf = key.replace("quick-", "");
       toggleQuickFilter(qf);
@@ -108,6 +142,8 @@ const CategoriesPage = () => {
   const handleCategorySelect = (name: string | null) => {
     setActive(name);
     setActiveSub(null);
+    setFilters(emptyFilters);
+    setSortValue("newest");
     if (name) navigate(`/categories/${slugify(name)}`, { replace: true });
     else navigate("/categories", { replace: true });
   };
@@ -116,31 +152,94 @@ const CategoriesPage = () => {
     if (isMobile) setQuickViewProduct(product);
   };
 
+  // ─── Category Browse (no category selected) ───
+  if (!active) {
+    return (
+      <div className="min-h-screen bg-background pb-20 md:pb-0">
+        <Header />
+        <main className="max-w-7xl mx-auto">
+          {/* Category list */}
+          <div className="px-4 pt-3 pb-6">
+            {categories.map((cat, i) => {
+              const Icon = categoryIcons[cat.name] || ShoppingCart;
+              return (
+                <button
+                  key={cat.name}
+                  onClick={() => handleCategorySelect(cat.name)}
+                  className={`w-full flex items-center gap-3.5 py-3.5 px-1 active:bg-secondary/50 ${
+                    i < categories.length - 1 ? "border-b border-border/50" : ""
+                  }`}
+                >
+                  <div className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center flex-shrink-0">
+                    <Icon className="w-[18px] h-[18px] text-foreground/60" strokeWidth={1.5} />
+                  </div>
+                  <span className="text-[14px] font-medium text-foreground flex-1 text-left">{cat.name}</span>
+                  <span className="text-[12px] text-muted-foreground mr-1">{cat.count}</span>
+                  <ChevronRight className="w-4 h-4 text-muted-foreground/50" strokeWidth={1.5} />
+                </button>
+              );
+            })}
+          </div>
+        </main>
+        <BottomNav />
+      </div>
+    );
+  }
+
+  // ─── Category Detail View ───
   return (
     <div className="min-h-screen bg-background pb-20 md:pb-0">
       <Header />
 
       <main className="max-w-7xl mx-auto">
-        {/* ─── Sticky toolbar ─── */}
+        {/* Sticky toolbar */}
         <div className="sticky top-[80px] md:top-[44px] z-30 bg-background/98 backdrop-blur-sm">
-          {/* Back + category name when selected */}
-          {active && (
-            <div className="px-4 pt-2 pb-1 flex items-center gap-2">
-              <button
-                onClick={() => handleCategorySelect(null)}
-                className="w-7 h-7 flex items-center justify-center rounded-full active:bg-secondary -ml-1"
-              >
-                <ArrowLeft className="w-4 h-4 text-foreground" strokeWidth={1.5} />
-              </button>
-              <span className="text-[15px] font-semibold text-foreground">{active}</span>
-              <span className="text-[12px] text-muted-foreground ml-auto">{results.length}</span>
+          {/* Back + category */}
+          <div className="px-4 pt-2 pb-1.5 flex items-center gap-2">
+            <button
+              onClick={() => handleCategorySelect(null)}
+              className="w-7 h-7 flex items-center justify-center rounded-full active:bg-secondary -ml-1"
+            >
+              <ArrowLeft className="w-4 h-4 text-foreground" strokeWidth={1.5} />
+            </button>
+            <span className="text-[15px] font-semibold text-foreground">{active}</span>
+            <span className="text-[12px] text-muted-foreground ml-auto">{results.length}</span>
+          </div>
+
+          {/* Subcategory pills */}
+          {currentSubs.length > 0 && (
+            <div className="px-4 pb-1.5">
+              <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-hide">
+                <button
+                  onClick={() => setActiveSub(null)}
+                  className={`px-2.5 h-7 rounded-full text-[11px] font-medium whitespace-nowrap flex-shrink-0 ${
+                    !activeSub
+                      ? "bg-foreground text-background"
+                      : "bg-secondary text-muted-foreground active:bg-accent"
+                  }`}
+                >
+                  All
+                </button>
+                {currentSubs.map((sub) => (
+                  <button
+                    key={sub}
+                    onClick={() => setActiveSub(activeSub === sub ? null : sub)}
+                    className={`px-2.5 h-7 rounded-full text-[11px] font-medium whitespace-nowrap flex-shrink-0 ${
+                      activeSub === sub
+                        ? "bg-foreground text-background"
+                        : "bg-secondary text-muted-foreground active:bg-accent"
+                    }`}
+                  >
+                    {sub}
+                  </button>
+                ))}
+              </div>
             </div>
           )}
 
-          {/* Toolbar row */}
-          <div className="px-4 py-2">
+          {/* Filter/Sort toolbar */}
+          <div className="px-4 py-1.5">
             <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-hide">
-              {/* Filter */}
               <button
                 onClick={() => setFilterOpen(true)}
                 className={`flex items-center gap-1.5 px-3 h-8 rounded-full border text-[12px] font-medium flex-shrink-0 ${
@@ -158,7 +257,6 @@ const CategoriesPage = () => {
                 )}
               </button>
 
-              {/* Sort */}
               <button
                 onClick={() => setSortOpen(true)}
                 className={`flex items-center gap-1.5 px-3 h-8 rounded-full border text-[12px] font-medium flex-shrink-0 ${
@@ -173,7 +271,6 @@ const CategoriesPage = () => {
 
               <div className="w-px h-5 bg-border flex-shrink-0" />
 
-              {/* Quick filter pills */}
               {quickFilterOptions.map((qf) => {
                 const isActive = filters.quickFilters.includes(qf.key);
                 const Icon = qf.icon;
@@ -195,7 +292,6 @@ const CategoriesPage = () => {
 
               <div className="flex-1" />
 
-              {/* View toggle */}
               <div className="flex items-center gap-0.5 flex-shrink-0 bg-secondary rounded-lg p-0.5">
                 <button
                   onClick={() => setViewMode("grid")}
@@ -217,47 +313,9 @@ const CategoriesPage = () => {
             </div>
           </div>
 
-          {/* Category chips — only when no category selected */}
-          {!active && (
-            <div className="px-4 pb-2">
-              <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-hide">
-                <CategoryChip label="All" active={!active} onClick={() => handleCategorySelect(null)} />
-                {categories.map((cat) => (
-                  <CategoryChip
-                    key={cat.name}
-                    label={cat.name}
-                    active={active === cat.name}
-                    onClick={() => handleCategorySelect(cat.name)}
-                  />
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Subcategory pills */}
-          {active && currentSubs.length > 0 && (
-            <div className="px-4 pb-2">
-              <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-hide">
-                {currentSubs.map((sub) => (
-                  <button
-                    key={sub}
-                    onClick={() => setActiveSub(activeSub === sub ? null : sub)}
-                    className={`px-2.5 h-7 rounded-full text-[11px] font-medium whitespace-nowrap flex-shrink-0 ${
-                      activeSub === sub
-                        ? "bg-foreground text-background"
-                        : "bg-secondary/70 text-muted-foreground active:bg-secondary"
-                    }`}
-                  >
-                    {sub}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-
           {/* Active filter chips */}
           {activeFilterTags.length > 0 && (
-            <div className="px-4 pb-2">
+            <div className="px-4 pb-1.5">
               <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-hide">
                 {activeFilterTags.map((tag) => (
                   <button
@@ -270,7 +328,7 @@ const CategoriesPage = () => {
                   </button>
                 ))}
                 <button
-                  onClick={() => setFilters({ conditions: [], priceMin: "", priceMax: "", quickFilters: [] })}
+                  onClick={() => setFilters(emptyFilters)}
                   className="text-[10px] text-muted-foreground active:text-foreground whitespace-nowrap flex-shrink-0"
                 >
                   Clear all
@@ -282,7 +340,7 @@ const CategoriesPage = () => {
           <div className="h-px bg-border/60" />
         </div>
 
-        {/* ─── Product grid / list ─── */}
+        {/* Product grid / list */}
         <section className="px-4 pt-3 pb-6">
           {viewMode === "grid" ? (
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-3 gap-y-4">
@@ -293,7 +351,7 @@ const CategoriesPage = () => {
               ))}
             </div>
           ) : (
-            <div className="space-y-3">
+            <div className="divide-y divide-border/50">
               {results.map((product) => (
                 <div key={product.id} onClick={() => handleProductTap(product)} className="cursor-pointer">
                   <ListProductCard product={product} />
@@ -317,36 +375,5 @@ const CategoriesPage = () => {
     </div>
   );
 };
-
-const ListProductCard = ({ product }: { product: Product }) => (
-  <div className="flex gap-3">
-    <div className="relative w-24 aspect-[3/4] rounded-lg overflow-hidden bg-secondary flex-shrink-0">
-      <img src={product.image} alt={product.title} className="w-full h-full object-cover" loading="lazy" />
-      {product.discount && (
-        <span className="absolute top-1.5 left-1.5 bg-destructive text-destructive-foreground text-[9px] font-semibold px-1.5 py-0.5 rounded">
-          -{product.discount}%
-        </span>
-      )}
-    </div>
-    <div className="flex-1 min-w-0 py-0.5">
-      <div className="flex items-baseline gap-1.5 mb-0.5">
-        <span className="text-[15px] font-semibold text-foreground">€{product.price.toLocaleString()}</span>
-        {product.oldPrice && (
-          <span className="text-[11px] text-muted-foreground line-through">€{product.oldPrice.toLocaleString()}</span>
-        )}
-      </div>
-      <p className="text-[12px] text-foreground/80 leading-snug line-clamp-2 mb-1">{product.title}</p>
-      <div className="flex items-center gap-1.5">
-        <span className="text-[10px] text-muted-foreground">{product.seller.name}</span>
-        {product.verified && <CheckCircle2 className="w-3 h-3 text-success" />}
-      </div>
-      {product.condition && (
-        <span className="inline-block mt-1 text-[9px] font-medium text-muted-foreground bg-secondary px-1.5 py-0.5 rounded">
-          {product.condition}
-        </span>
-      )}
-    </div>
-  </div>
-);
 
 export default CategoriesPage;
