@@ -189,22 +189,23 @@ const CategoriesPage = () => {
   // ─── Category Detail View ───
   return (
     <div className="min-h-screen bg-background pb-20 md:pb-0">
-      <Header />
+      {/* Contextual header */}
+      <header className="sticky top-0 z-40 bg-card border-b border-border/50">
+        <div className="max-w-7xl mx-auto flex items-center h-[44px] px-4">
+          <button
+            onClick={() => handleCategorySelect(null)}
+            className="w-8 h-8 flex items-center justify-center rounded-full active:bg-secondary -ml-2"
+          >
+            <ArrowLeft className="w-[18px] h-[18px] text-foreground" strokeWidth={1.5} />
+          </button>
+          <span className="text-[15px] font-semibold text-foreground ml-1">{active}</span>
+          <span className="text-[12px] text-muted-foreground ml-auto">{results.length} items</span>
+        </div>
+      </header>
 
       <main className="max-w-7xl mx-auto">
         {/* Sticky toolbar */}
-        <div className="sticky top-[80px] md:top-[44px] z-30 bg-background/98 backdrop-blur-sm">
-          {/* Back + category */}
-          <div className="px-4 pt-2 pb-1.5 flex items-center gap-2">
-            <button
-              onClick={() => handleCategorySelect(null)}
-              className="w-7 h-7 flex items-center justify-center rounded-full active:bg-secondary -ml-1"
-            >
-              <ArrowLeft className="w-4 h-4 text-foreground" strokeWidth={1.5} />
-            </button>
-            <span className="text-[15px] font-semibold text-foreground">{active}</span>
-            <span className="text-[12px] text-muted-foreground ml-auto">{results.length}</span>
-          </div>
+        <div className="sticky top-[44px] z-30 bg-background/98 backdrop-blur-sm">
 
           {/* Subcategory pills */}
           {currentSubs.length > 0 && (
