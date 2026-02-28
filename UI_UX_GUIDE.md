@@ -281,7 +281,16 @@ Used on Product Detail and Sell pages:
 - Product detail has two-button layout: message icon button + full-width "Buy Now" button
 - Message button: `w-11 h-11 rounded-xl border border-border`
 
-### 7.8 Detail Page Top Bar
+### 7.8 Contextual Category Header
+- Used on `/categories/:slug` — replaces full Header component
+- Height: `h-[44px]`, sticky `top-0 z-40`
+- Background: `bg-card border-b border-border/50`
+- Layout: back arrow (left) + category name (center-left) + item count + search icon (right)
+- Back arrow: `w-8 h-8 rounded-full active:bg-secondary`, ArrowLeft `w-[18px]`
+- Search icon: links to `/search`, same size as back arrow
+- Subcategory pills sit in sticky toolbar below at `top-[44px]` with `pt-2 pb-1.5` spacing
+
+### 7.9 Detail Page Top Bar
 - Fixed floating bar: `fixed top-0 left-0 right-0 z-50 h-12 bg-card/90 backdrop-blur-md border-b border-border`
 - Back button (left): ArrowLeft in `w-8 h-8 rounded-full hover:bg-secondary`
 - Action buttons (right): Heart + Share2 in same circular buttons
@@ -425,7 +434,8 @@ All icons from `lucide-react`.
 | Path | Page | Layout |
 |------|------|--------|
 | `/` | Home (Index) | Header + BottomNav |
-| `/categories` | Browse/Categories | Header + BottomNav |
+| `/categories` | Browse/Categories | Header + BottomNav (browse list) |
+| `/categories/:slug` | Category Detail | Contextual header (back + title + search) + BottomNav |
 | `/search` | Search | Custom header + BottomNav |
 | `/profile` | Profile | Header + BottomNav |
 | `/product/:id` | Product Detail | Floating top bar + Sticky buy bar |

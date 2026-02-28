@@ -1,10 +1,11 @@
 import { useState, useMemo } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import {
   SlidersHorizontal,
   ArrowLeft,
   ArrowUpDown,
   X,
+  Search,
   LayoutGrid,
   StretchHorizontal,
   Percent,
@@ -199,17 +200,24 @@ const CategoriesPage = () => {
             <ArrowLeft className="w-[18px] h-[18px] text-foreground" strokeWidth={1.5} />
           </button>
           <span className="text-[15px] font-semibold text-foreground ml-1">{active}</span>
-          <span className="text-[12px] text-muted-foreground ml-auto">{results.length} items</span>
+          <div className="ml-auto flex items-center gap-1">
+            <span className="text-[12px] text-muted-foreground">{results.length}</span>
+            <Link
+              to="/search"
+              className="w-8 h-8 flex items-center justify-center rounded-full active:bg-secondary"
+            >
+              <Search className="w-[18px] h-[18px] text-foreground" strokeWidth={1.5} />
+            </Link>
+          </div>
         </div>
       </header>
 
       <main className="max-w-7xl mx-auto">
         {/* Sticky toolbar */}
         <div className="sticky top-[44px] z-30 bg-background/98 backdrop-blur-sm">
-
           {/* Subcategory pills */}
           {currentSubs.length > 0 && (
-            <div className="px-4 pb-1.5">
+            <div className="px-4 pt-2 pb-1.5">
               <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-hide">
                 <button
                   onClick={() => setActiveSub(null)}
