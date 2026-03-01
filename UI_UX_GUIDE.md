@@ -208,14 +208,15 @@ Every page follows this structure:
 ## 7. Component Patterns
 
 ### 7.1 Header
-- Height: `h-12` (48px)
+- Height: `h-[44px]`, single row
 - Sticky: `sticky top-0 z-40`
-- Background: `bg-card/95 backdrop-blur-md border-b border-border`
-- Layout: Logo left, desktop nav center (hidden on mobile), icon buttons right
+- Background: `bg-card backdrop-blur-xl border-b border-border/50`
+- Layout: Logo (left) → Search pill (center, flex-1) → icon buttons (right)
+- **Search pill:** `h-[32px] rounded-full bg-secondary text-[12px] text-muted-foreground`, links to `/search` overlay on tap. Max width `max-w-[240px]`, uses `flex-1 mx-3`
+- No separate mobile search row — search pill is always inline in header
 - Icons: `w-[18px] h-[18px]` with `strokeWidth={1.5}`
-- Icon buttons: `p-2 hover:bg-secondary rounded-full transition-colors`
-- Mobile search bar below header: `h-9 px-3 rounded-lg bg-secondary text-[13px]`
-- Shopping bag has notification dot: `w-3.5 h-3.5 bg-brand text-brand-foreground text-[8px] font-bold rounded-full`
+- Icon buttons: `p-2 rounded-full active:bg-secondary`
+- Shopping bag notification dot: `w-3.5 h-3.5 bg-brand text-brand-foreground text-[8px] font-bold rounded-full`
 
 ### 7.2 Bottom Navigation (Mobile Only)
 - Visibility: `md:hidden`
@@ -250,12 +251,22 @@ Every page follows this structure:
 - No shadows, no borders, no icons inside chips
 - Transition: `transition-all`
 
-### 7.5 Category Icon Grid (Home page)
-- Container: `w-[52px] h-[52px] rounded-xl bg-secondary`
-- Hover: `group-hover:bg-accent transition-colors`
-- Icon: `w-5 h-5 text-foreground/70 strokeWidth={1.5}`
-- Label below: `text-[10px] font-medium text-muted-foreground`
-- Row: `flex gap-4 overflow-x-auto scrollbar-hide`
+### 7.5 Home Page Navigation Layers
+Two-tier navigation on the home page:
+
+**Layer 1 — Category pills** (primary, top):
+- Scrollable horizontal row with `overflow-x-auto scrollbar-hide`
+- "All" pill selected by default: `bg-foreground text-background`
+- Inactive pills: `bg-secondary text-muted-foreground active:bg-accent`
+- Size: `px-3 h-[30px] rounded-full text-[12px] font-medium`
+- Separated from feed tabs by `border-b border-border/40`
+
+**Layer 2 — Feed tabs** (secondary, below):
+- Underline-style text tabs: `text-[13px] font-medium`
+- Active: `text-foreground` with a `h-[2px] bg-foreground rounded-full` underline bar
+- Inactive: `text-muted-foreground`
+- Tabs: For You, Newest, Trending, Deals
+- Separated from product grid by `h-px bg-border/60`
 
 ### 7.6 Filter Drawer (vaul/shadcn Drawer)
 - Max height: `max-h-[85vh]`
