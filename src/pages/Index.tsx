@@ -1,18 +1,40 @@
 import { useState, useRef } from "react";
+import { SlidersHorizontal } from "lucide-react";
 import Header from "@/components/Header";
 import BottomNav from "@/components/BottomNav";
 import ProductCard from "@/components/ProductCard";
+import FilterDrawer, { FilterState } from "@/components/FilterDrawer";
 import { mockProducts, categories } from "@/data/mockData";
 import { Link } from "react-router-dom";
 
-const feedTabs = ["For You", "Newest", "Trending", "Deals"];
+const quickFilters = ["Free Shipping", "New", "Under €50", "Verified", "On Sale"];
 
 const slugify = (name: string) => name.toLowerCase().replace(/\s+/g, "-");
 
 const Index = () => {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState("For You");
-  const tabRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+  const [activeFeed, setActiveFeed] = useState("For You");
+  const [activeQuickFilters, setActiveQuickFilters] = useState<string[]>([]);
+  const [filterDrawerOpen, setFilterDrawerOpen] = useState(false);
+  const [filters, setFilters] = useState<FilterState>({
+    conditions: [],
+    priceMin: "",
+    priceMax: "",
+    quickFilters: [],
+    brands: [],
+  });
+
+  const toggleQuickFilter = (f: string) => {
+    setActiveQuickFilters((prev) =>
+      prev.includes(f) ? prev.filter((x) => x !== f) : [...prev, f]
+    );
+  };
+
+  const totalActiveFilters =
+    activeQuickFilters.length +
+    filters.conditions.length +
+    filters.brands.length +
+    (filters.priceMin || filters.priceMax ? 1 : 0);
 
   const filteredProducts = activeCategory
     ? mockProducts.filter((p) => p.category === activeCategory)
@@ -20,7 +42,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background pb-20 md:pb-0">
-      <Header />
+      <Header activeFeed={activeFeed} onFeedChange={setActiveFeed} />
 
       <main className="max-w-7xl mx-auto">
         {/* Category pills — scrollable */}
@@ -58,28 +80,39 @@ const Index = () => {
           </div>
         </div>
 
-        {/* Feed tabs — underline style */}
-        <div className="px-4">
-          <div className="flex gap-0 overflow-x-auto scrollbar-hide relative">
-            {feedTabs.map((tab) => (
+        {/* Quick filter bar */}
+        <div className="px-4 py-2 border-b border-border/40">
+          <div className="flex gap-1.5 overflow-x-auto scrollbar-hide items-center">
+            {/* Filter button */}
+            <button
+              onClick={() => setFilterDrawerOpen(true)}
+              className={`flex items-center gap-1 px-2.5 h-[30px] rounded-full text-[12px] font-medium whitespace-nowrap flex-shrink-0 transition-colors border ${
+                totalActiveFilters > 0
+                  ? "border-foreground bg-foreground text-background"
+                  : "border-border text-muted-foreground active:bg-accent"
+              }`}
+            >
+              <SlidersHorizontal className="w-3 h-3" strokeWidth={1.5} />
+              {totalActiveFilters > 0 && (
+                <span className="text-[10px] font-bold">{totalActiveFilters}</span>
+              )}
+            </button>
+
+            {/* Quick filter pills */}
+            {quickFilters.map((f) => (
               <button
-                key={tab}
-                ref={(el) => { tabRefs.current[tab] = el; }}
-                onClick={() => setActiveTab(tab)}
-                className={`relative px-3.5 py-2.5 text-[13px] font-medium whitespace-nowrap transition-colors ${
-                  activeTab === tab
-                    ? "text-foreground"
-                    : "text-muted-foreground active:text-foreground"
+                key={f}
+                onClick={() => toggleQuickFilter(f)}
+                className={`px-3 h-[30px] rounded-full text-[12px] font-medium whitespace-nowrap flex-shrink-0 transition-colors ${
+                  activeQuickFilters.includes(f)
+                    ? "bg-foreground text-background"
+                    : "bg-secondary text-muted-foreground active:bg-accent"
                 }`}
               >
-                {tab}
-                {activeTab === tab && (
-                  <span className="absolute bottom-0 left-3.5 right-3.5 h-[2px] bg-foreground rounded-full" />
-                )}
+                {f}
               </button>
             ))}
           </div>
-          <div className="h-px bg-border/60 -mt-px" />
         </div>
 
         {/* Products */}
@@ -98,6 +131,12 @@ const Index = () => {
         </section>
       </main>
 
+      <FilterDrawer
+        open={filterDrawerOpen}
+        onClose={() => setFilterDrawerOpen(false)}
+        filters={filters}
+        onApply={setFilters}
+      />
       <BottomNav />
     </div>
   );
