@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>treido — Search</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { display:['"Plus Jakarta Sans"','system-ui','sans-serif'], body:['Inter','system-ui','sans-serif'] },
+          colors: { background:'hsl(0 0% 98%)', foreground:'hsl(0 0% 7%)', card:'hsl(0 0% 100%)', secondary:'hsl(0 0% 95%)', muted:'hsl(0 0% 45%)', accent:'hsl(0 0% 92%)', border:'hsl(0 0% 91%)', destructive:'hsl(0 72% 51%)', success:'hsl(152 55% 41%)' }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family:'Inter',system-ui,sans-serif; }
+    h1,h2,h3,h4,h5,h6 { font-family:'Plus Jakarta Sans',system-ui,sans-serif; letter-spacing:-0.01em; }
+    .safe-bottom { padding-bottom:env(safe-area-inset-bottom,0px); }
+  </style>
+</head>
+<body class="bg-background antialiased">
+  <div class="min-h-screen pb-16 md:pb-0">
+
+    <!-- SEARCH HEADER -->
+    <header class="sticky top-0 z-40 bg-card border-b border-border">
+      <div class="max-w-7xl mx-auto flex items-center gap-2 h-12 px-4">
+        <a href="home.html" class="-ml-1"><span class="iconify w-5 h-5 text-foreground" data-icon="lucide:arrow-left"></span></a>
+        <div class="flex-1 flex items-center gap-2 h-9 px-3 rounded-lg bg-secondary focus-within:ring-1 focus-within:ring-foreground transition-all">
+          <span class="iconify w-4 h-4 text-muted flex-shrink-0" data-icon="lucide:search"></span>
+          <input id="searchInput" type="text" placeholder="Search on treido" class="flex-1 bg-transparent text-[13px] text-foreground placeholder:text-muted outline-none" oninput="handleSearch(this.value)" autofocus />
+          <button id="clearBtn" class="hidden" onclick="clearSearch()"><span class="iconify w-4 h-4 text-muted" data-icon="lucide:x"></span></button>
+        </div>
+      </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4">
+      <!-- Default state: recent + trending -->
+      <div id="defaultState">
+        <section class="pt-5 pb-4">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-[13px] font-semibold text-foreground flex items-center gap-1.5">
+              <span class="iconify w-3.5 h-3.5 text-muted" data-icon="lucide:clock"></span>Recent
+            </h3>
+            <button class="text-[12px] text-muted hover:text-foreground transition-colors">Clear</button>
+          </div>
+          <div class="flex flex-wrap gap-1.5">
+            <button onclick="setSearch('iPhone 15')" class="px-3 py-1.5 rounded-full bg-secondary text-[13px] text-foreground hover:bg-accent transition-colors">iPhone 15</button>
+            <button onclick="setSearch('BMW')" class="px-3 py-1.5 rounded-full bg-secondary text-[13px] text-foreground hover:bg-accent transition-colors">BMW</button>
+            <button onclick="setSearch('Gaming Chair')" class="px-3 py-1.5 rounded-full bg-secondary text-[13px] text-foreground hover:bg-accent transition-colors">Gaming Chair</button>
+            <button onclick="setSearch('MacBook Pro')" class="px-3 py-1.5 rounded-full bg-secondary text-[13px] text-foreground hover:bg-accent transition-colors">MacBook Pro</button>
+          </div>
+        </section>
+
+        <section class="pb-4">
+          <h3 class="text-[13px] font-semibold text-foreground flex items-center gap-1.5 mb-2">
+            <span class="iconify w-3.5 h-3.5 text-muted" data-icon="lucide:trending-up"></span>Trending
+          </h3>
+          <div class="divide-y divide-border">
+            <button onclick="setSearch('PlayStation 5')" class="flex items-center gap-3 w-full py-2.5 text-left hover:bg-secondary/50 transition-colors -mx-1 px-1 rounded">
+              <span class="text-[12px] font-semibold text-muted w-4 text-center">1</span>
+              <span class="text-[13px] text-foreground">PlayStation 5</span>
+            </button>
+            <button onclick="setSearch('Air Jordan')" class="flex items-center gap-3 w-full py-2.5 text-left hover:bg-secondary/50 transition-colors -mx-1 px-1 rounded">
+              <span class="text-[12px] font-semibold text-muted w-4 text-center">2</span>
+              <span class="text-[13px] text-foreground">Air Jordan</span>
+            </button>
+            <button onclick="setSearch('Dyson')" class="flex items-center gap-3 w-full py-2.5 text-left hover:bg-secondary/50 transition-colors -mx-1 px-1 rounded">
+              <span class="text-[12px] font-semibold text-muted w-4 text-center">3</span>
+              <span class="text-[13px] text-foreground">Dyson</span>
+            </button>
+            <button onclick="setSearch('Samsung TV')" class="flex items-center gap-3 w-full py-2.5 text-left hover:bg-secondary/50 transition-colors -mx-1 px-1 rounded">
+              <span class="text-[12px] font-semibold text-muted w-4 text-center">4</span>
+              <span class="text-[13px] text-foreground">Samsung TV</span>
+            </button>
+            <button onclick="setSearch('Rolex')" class="flex items-center gap-3 w-full py-2.5 text-left hover:bg-secondary/50 transition-colors -mx-1 px-1 rounded">
+              <span class="text-[12px] font-semibold text-muted w-4 text-center">5</span>
+              <span class="text-[13px] text-foreground">Rolex</span>
+            </button>
+          </div>
+        </section>
+      </div>
+
+      <!-- Results state -->
+      <div id="resultsState" class="hidden">
+        <div class="flex gap-1.5 pt-3 pb-2 overflow-x-auto">
+          <button class="px-3.5 py-1.5 rounded-full text-[13px] font-medium bg-foreground text-white whitespace-nowrap">All</button>
+          <button class="px-3.5 py-1.5 rounded-full text-[13px] font-medium bg-secondary text-muted whitespace-nowrap">Electronics</button>
+          <button class="px-3.5 py-1.5 rounded-full text-[13px] font-medium bg-secondary text-muted whitespace-nowrap">Fashion</button>
+          <button class="px-3.5 py-1.5 rounded-full text-[13px] font-medium bg-secondary text-muted whitespace-nowrap">Home</button>
+        </div>
+        <p id="resultsCount" class="text-[13px] text-muted py-2"></p>
+        <div id="resultsGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-3 gap-y-5 pb-6"></div>
+      </div>
+    </main>
+
+    <!-- BOTTOM NAV -->
+    <nav class="fixed bottom-0 left-0 right-0 z-50 md:hidden">
+      <div class="bg-card border-t border-border/50 rounded-t-[20px] safe-bottom" style="box-shadow:0 -1px 8px rgba(0,0,0,0.04)">
+        <div class="flex items-center justify-around h-[56px] px-4">
+          <a href="home.html" class="flex flex-col items-center gap-[2px] min-w-[44px] text-muted"><span class="iconify w-5 h-5" data-icon="lucide:home"></span><span class="text-[9px] font-medium leading-none">Home</span></a>
+          <a href="search.html" class="flex flex-col items-center gap-[2px] min-w-[44px] text-foreground"><span class="iconify w-5 h-5" data-icon="lucide:search" style="stroke-width:2"></span><span class="text-[9px] font-medium leading-none">Search</span></a>
+          <a href="sell.html" class="flex items-center justify-center w-10 h-10 rounded-full bg-foreground text-white"><span class="iconify w-[18px] h-[18px]" data-icon="lucide:plus" style="stroke-width:2"></span></a>
+          <a href="#" class="flex flex-col items-center gap-[2px] min-w-[44px] text-muted"><span class="iconify w-5 h-5" data-icon="lucide:message-circle"></span><span class="text-[9px] font-medium leading-none">Messages</span></a>
+          <a href="profile.html" class="flex flex-col items-center gap-[2px] min-w-[44px] text-muted"><span class="iconify w-5 h-5" data-icon="lucide:user"></span><span class="text-[9px] font-medium leading-none">Profile</span></a>
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <script>
+    const products = [
+      { title:"iPhone 15 Pro Max 256GB", price:1950, oldPrice:2200, discount:11, image:"https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=600&h=800&fit=crop", seller:"treido", verified:true },
+      { title:'MacBook Pro 16" M3 Max 36GB', price:3499, image:"https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600&h=800&fit=crop", seller:"tech_haven", verified:true, condition:"Like New" },
+      { title:"PlayStation 5 Digital Edition", price:449, oldPrice:499, discount:10, image:"https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=600&h=800&fit=crop", seller:"tech_haven", verified:true, condition:"New" },
+      { title:"2022 BMW 330i xDrive Sedan", price:38500, image:"https://images.unsplash.com/photo-1555215695-3004980ad54e?w=600&h=800&fit=crop", seller:"treido", verified:true },
+      { title:"Rolex Submariner Date Steel", price:12500, image:"https://images.unsplash.com/photo-1587836374828-4dbafa94cf0e?w=600&h=800&fit=crop", seller:"luxury_watches", verified:true, condition:"Like New" },
+      { title:"Dyson V15 Detect Absolute", price:599, oldPrice:749, discount:20, image:"https://images.unsplash.com/photo-1558317374-067fb5f30001?w=600&h=800&fit=crop", seller:"home_deals", verified:true, condition:"New" },
+    ];
+
+    function setSearch(q) { document.getElementById('searchInput').value = q; handleSearch(q); }
+    function clearSearch() { document.getElementById('searchInput').value = ''; handleSearch(''); }
+
+    function handleSearch(q) {
+      const clear = document.getElementById('clearBtn');
+      clear.classList.toggle('hidden', !q);
+      document.getElementById('defaultState').classList.toggle('hidden', !!q);
+      document.getElementById('resultsState').classList.toggle('hidden', !q);
+      if (!q) return;
+      const results = products.filter(p => p.title.toLowerCase().includes(q.toLowerCase()));
+      document.getElementById('resultsCount').textContent = `${results.length} result${results.length!==1?'s':''} for "${q}"`;
+      document.getElementById('resultsGrid').innerHTML = results.map(p => `
+        <a href="detail.html" class="group block">
+          <div class="relative aspect-[3/4] overflow-hidden rounded-xl bg-secondary mb-1.5">
+            <img src="${p.image}" alt="" class="w-full h-full object-cover" loading="lazy" />
+            ${p.discount ? `<span class="absolute top-1.5 left-1.5 bg-destructive text-white text-[9px] font-semibold px-1.5 py-0.5 rounded">-${p.discount}%</span>` : ''}
+            ${p.condition ? `<span class="absolute bottom-1.5 left-1.5 bg-white/90 text-[9px] font-medium text-foreground px-1.5 py-0.5 rounded" style="backdrop-filter:blur(4px)">${p.condition}</span>` : ''}
+          </div>
+          <div>
+            <div class="flex items-baseline gap-1.5"><span class="text-[14px] font-semibold text-foreground">€${p.price.toLocaleString()}</span>${p.oldPrice?`<span class="text-[11px] text-muted line-through">€${p.oldPrice.toLocaleString()}</span>`:''}</div>
+            <p class="text-[11px] text-muted line-clamp-2 leading-snug mt-0.5">${p.title}</p>
+            <div class="flex items-center gap-1 mt-1"><span class="text-[10px]" style="color:hsl(0 0% 45%/0.7)">${p.seller}</span>${p.verified?'<span class="iconify w-2.5 h-2.5 text-success" data-icon="lucide:check-circle-2"></span>':''}</div>
+          </div>
+        </a>
+      `).join('') || '<div class="col-span-full py-20 text-center"><p class="text-[13px] text-muted">No results found. Try something different.</p></div>';
+    }
+  </script>
+</body>
+</html>

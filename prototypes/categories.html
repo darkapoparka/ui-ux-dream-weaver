@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>treido — Categories</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { display: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'], body: ['Inter', 'system-ui', 'sans-serif'] },
+          colors: { background:'hsl(0 0% 98%)', foreground:'hsl(0 0% 7%)', card:'hsl(0 0% 100%)', secondary:'hsl(0 0% 95%)', muted:'hsl(0 0% 45%)', accent:'hsl(0 0% 92%)', border:'hsl(0 0% 91%)', brand:'hsl(24 90% 52%)' }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    h1,h2,h3,h4,h5,h6 { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; letter-spacing: -0.01em; }
+    .scrollbar-hide { -ms-overflow-style:none; scrollbar-width:none; }
+    .scrollbar-hide::-webkit-scrollbar { display:none; }
+    .safe-bottom { padding-bottom: env(safe-area-inset-bottom, 0px); }
+  </style>
+</head>
+<body class="bg-background antialiased">
+  <div class="min-h-screen pb-20 md:pb-0">
+
+    <!-- HEADER -->
+    <header class="sticky top-0 z-40 bg-card border-b border-border/50" style="backdrop-filter:blur(20px)">
+      <div class="max-w-7xl mx-auto flex items-center justify-between h-[44px] px-4">
+        <a href="home.html" class="text-[16px] font-extrabold font-display text-foreground tracking-tight">treido.</a>
+        <a href="search.html" class="flex items-center gap-2 h-[32px] flex-1 max-w-[240px] mx-3 px-3 rounded-full bg-secondary text-[12px] text-muted">
+          <span class="iconify w-3.5 h-3.5" data-icon="lucide:search"></span>
+          <span class="truncate">Search products</span>
+        </a>
+        <div class="flex items-center flex-shrink-0">
+          <a href="profile.html" class="p-2 rounded-full active:bg-secondary"><span class="iconify w-[18px] h-[18px] text-foreground" data-icon="lucide:heart"></span></a>
+          <button class="p-2 rounded-full active:bg-secondary relative">
+            <span class="iconify w-[18px] h-[18px] text-foreground" data-icon="lucide:shopping-bag"></span>
+            <span class="absolute top-1 right-1 w-3.5 h-3.5 bg-brand text-white text-[8px] font-bold rounded-full flex items-center justify-center">2</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto">
+      <div class="px-4 pt-3 pb-6">
+        <!-- Category list -->
+        <script>
+          const cats = [
+            { name:"Electronics", count:1240, icon:"lucide:laptop" },
+            { name:"Fashion", count:890, icon:"lucide:shirt" },
+            { name:"Home", count:567, icon:"lucide:sofa" },
+            { name:"Automotive", count:234, icon:"lucide:car" },
+            { name:"Gaming", count:456, icon:"lucide:gamepad-2" },
+            { name:"Sports", count:321, icon:"lucide:dumbbell" },
+            { name:"Beauty", count:198, icon:"lucide:sparkles" },
+            { name:"Kids", count:276, icon:"lucide:baby" },
+            { name:"Pets", count:143, icon:"mdi:paw" },
+            { name:"Real Estate", count:87, icon:"lucide:building-2" },
+            { name:"Software", count:165, icon:"lucide:code-2" },
+            { name:"Grocery", count:432, icon:"lucide:shopping-cart" },
+          ];
+          document.write(cats.map((c,i) => `
+            <a href="category-detail.html" class="w-full flex items-center gap-3.5 py-3.5 px-1 active:bg-secondary/50 ${i < cats.length-1 ? 'border-b border-border/50' : ''}">
+              <div class="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center flex-shrink-0">
+                <span class="iconify w-[18px] h-[18px] text-foreground/60" data-icon="${c.icon}"></span>
+              </div>
+              <span class="text-[14px] font-medium text-foreground flex-1 text-left">${c.name}</span>
+              <span class="text-[12px] text-muted mr-1">${c.count}</span>
+              <span class="iconify w-4 h-4 text-muted/50" data-icon="lucide:chevron-right"></span>
+            </a>
+          `).join(''));
+        </script>
+      </div>
+    </main>
+
+    <!-- BOTTOM NAV -->
+    <nav class="fixed bottom-0 left-0 right-0 z-50 md:hidden">
+      <div class="bg-card border-t border-border/50 rounded-t-[20px] safe-bottom" style="box-shadow:0 -1px 8px rgba(0,0,0,0.04)">
+        <div class="flex items-center justify-around h-[56px] px-4">
+          <a href="home.html" class="flex flex-col items-center gap-[2px] min-w-[44px] text-muted"><span class="iconify w-5 h-5" data-icon="lucide:home"></span><span class="text-[9px] font-medium leading-none">Home</span></a>
+          <a href="search.html" class="flex flex-col items-center gap-[2px] min-w-[44px] text-foreground"><span class="iconify w-5 h-5" data-icon="lucide:search" style="stroke-width:2"></span><span class="text-[9px] font-medium leading-none">Search</span></a>
+          <a href="sell.html" class="flex items-center justify-center w-10 h-10 rounded-full bg-foreground text-white"><span class="iconify w-[18px] h-[18px]" data-icon="lucide:plus" style="stroke-width:2"></span></a>
+          <a href="#" class="flex flex-col items-center gap-[2px] min-w-[44px] text-muted"><span class="iconify w-5 h-5" data-icon="lucide:message-circle"></span><span class="text-[9px] font-medium leading-none">Messages</span></a>
+          <a href="profile.html" class="flex flex-col items-center gap-[2px] min-w-[44px] text-muted"><span class="iconify w-5 h-5" data-icon="lucide:user"></span><span class="text-[9px] font-medium leading-none">Profile</span></a>
+        </div>
+      </div>
+    </nav>
+  </div>
+</body>
+</html>
