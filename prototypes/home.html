@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>treido — Home</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            body: ['Inter', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            background: 'hsl(0 0% 98%)',
+            foreground: 'hsl(0 0% 7%)',
+            card: 'hsl(0 0% 100%)',
+            'card-foreground': 'hsl(0 0% 7%)',
+            secondary: 'hsl(0 0% 95%)',
+            'secondary-foreground': 'hsl(0 0% 20%)',
+            muted: 'hsl(0 0% 45%)',
+            accent: 'hsl(0 0% 92%)',
+            border: 'hsl(0 0% 91%)',
+            destructive: 'hsl(0 72% 51%)',
+            success: 'hsl(152 55% 41%)',
+            brand: 'hsl(24 90% 52%)',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    h1,h2,h3,h4,h5,h6 { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; letter-spacing: -0.01em; }
+    .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+    .scrollbar-hide::-webkit-scrollbar { display: none; }
+    .safe-bottom { padding-bottom: env(safe-area-inset-bottom, 0px); }
+  </style>
+</head>
+<body class="bg-background antialiased">
+  <div class="min-h-screen pb-20 md:pb-0">
+
+    <!-- ═══ HEADER ═══ -->
+    <header class="sticky top-0 z-40 bg-card border-b border-border/50" style="backdrop-filter:blur(20px)">
+      <div class="max-w-7xl mx-auto flex items-center justify-between h-[44px] px-4">
+        <!-- Logo + Feed dropdown -->
+        <div class="flex items-center gap-1 flex-shrink-0">
+          <a href="home.html" class="text-[16px] font-extrabold font-display text-foreground tracking-tight">treido.</a>
+          <div class="relative" id="feedDropdown">
+            <button onclick="toggleFeedDropdown()" class="flex items-center gap-0.5 px-1.5 py-1 rounded-lg text-[12px] font-medium text-muted active:bg-secondary">
+              <span id="feedLabel">For You</span>
+              <span class="iconify w-3 h-3" data-icon="lucide:chevron-down"></span>
+            </button>
+            <div id="feedMenu" class="hidden absolute top-full left-0 mt-2 w-[140px] p-1 rounded-xl border border-border bg-card shadow-sm z-50">
+              <button onclick="selectFeed('For You')" class="w-full text-left px-3 py-2 rounded-lg text-[13px] font-medium text-foreground bg-secondary">For You</button>
+              <button onclick="selectFeed('Newest')" class="w-full text-left px-3 py-2 rounded-lg text-[13px] font-medium text-muted hover:bg-secondary">Newest</button>
+              <button onclick="selectFeed('Trending')" class="w-full text-left px-3 py-2 rounded-lg text-[13px] font-medium text-muted hover:bg-secondary">Trending</button>
+              <button onclick="selectFeed('Deals')" class="w-full text-left px-3 py-2 rounded-lg text-[13px] font-medium text-muted hover:bg-secondary">Deals</button>
+            </div>
+          </div>
+        </div>
+        <!-- Search pill -->
+        <a href="search.html" class="flex items-center gap-2 h-[32px] flex-1 max-w-[240px] mx-3 px-3 rounded-full bg-secondary text-[12px] text-muted md:max-w-xs">
+          <span class="iconify w-3.5 h-3.5 flex-shrink-0" data-icon="lucide:search"></span>
+          <span class="truncate">Search products</span>
+        </a>
+        <!-- Icons -->
+        <div class="flex items-center flex-shrink-0">
+          <a href="profile.html" class="p-2 rounded-full active:bg-secondary">
+            <span class="iconify w-[18px] h-[18px] text-foreground" data-icon="lucide:heart" style="stroke-width:1.5"></span>
+          </a>
+          <button class="p-2 rounded-full active:bg-secondary relative">
+            <span class="iconify w-[18px] h-[18px] text-foreground" data-icon="lucide:shopping-bag"></span>
+            <span class="absolute top-1 right-1 w-3.5 h-3.5 bg-brand text-white text-[8px] font-bold rounded-full flex items-center justify-center">2</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto">
+
+      <!-- ═══ CATEGORY PILLS ═══ -->
+      <div class="border-b border-border/40">
+        <div class="px-4 py-2">
+          <div class="flex gap-1.5 overflow-x-auto scrollbar-hide" id="categoryRow">
+            <button onclick="filterCategory(null, this)" class="cat-pill active px-3 h-[30px] rounded-full text-[12px] font-medium whitespace-nowrap flex-shrink-0 bg-foreground text-white transition-colors">All</button>
+            <a href="category-detail.html" class="cat-pill px-3 h-[30px] rounded-full text-[12px] font-medium whitespace-nowrap flex-shrink-0 flex items-center bg-secondary text-muted transition-colors">Electronics</a>
+            <button onclick="filterCategory('Fashion', this)" class="cat-pill px-3 h-[30px] rounded-full text-[12px] font-medium whitespace-nowrap flex-shrink-0 bg-secondary text-muted transition-colors">Fashion</button>
+            <button onclick="filterCategory('Home', this)" class="cat-pill px-3 h-[30px] rounded-full text-[12px] font-medium whitespace-nowrap flex-shrink-0 bg-secondary text-muted transition-colors">Home</button>
+            <button onclick="filterCategory('Automotive', this)" class="cat-pill px-3 h-[30px] rounded-full text-[12px] font-medium whitespace-nowrap flex-shrink-0 bg-secondary text-muted transition-colors">Automotive</button>
+            <button onclick="filterCategory('Gaming', this)" class="cat-pill px-3 h-[30px] rounded-full text-[12px] font-medium whitespace-nowrap flex-shrink-0 bg-secondary text-muted transition-colors">Gaming</button>
+            <button class="cat-pill px-3 h-[30px] rounded-full text-[12px] font-medium whitespace-nowrap flex-shrink-0 bg-secondary text-muted transition-colors">Sports</button>
+            <button class="cat-pill px-3 h-[30px] rounded-full text-[12px] font-medium whitespace-nowrap flex-shrink-0 bg-secondary text-muted transition-colors">Beauty</button>
+            <button class="cat-pill px-3 h-[30px] rounded-full text-[12px] font-medium whitespace-nowrap flex-shrink-0 bg-secondary text-muted transition-colors">Kids</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ QUICK FILTER BAR ═══ -->
+      <div class="px-4 py-2 border-b border-border/40">
+        <div class="flex gap-1.5 overflow-x-auto scrollbar-hide items-center">
+          <!-- Filter button (opens drawer) -->
+          <button onclick="toggleFilterDrawer()" class="flex items-center gap-1 px-2.5 h-[30px] rounded-full text-[12px] font-medium whitespace-nowrap flex-shrink-0 border border-border text-muted transition-colors" id="filterBtn">
+            <span class="iconify w-3 h-3" data-icon="lucide:sliders-horizontal"></span>
+          </button>
+          <!-- Quick filter pills -->
+          <button onclick="toggleQuickFilter(this)" class="qf-pill px-3 h-[30px] rounded-full text-[12px] font-medium whitespace-nowrap flex-shrink-0 bg-secondary text-muted transition-colors">Free Shipping</button>
+          <button onclick="toggleQuickFilter(this)" class="qf-pill px-3 h-[30px] rounded-full text-[12px] font-medium whitespace-nowrap flex-shrink-0 bg-secondary text-muted transition-colors">New</button>
+          <button onclick="toggleQuickFilter(this)" class="qf-pill px-3 h-[30px] rounded-full text-[12px] font-medium whitespace-nowrap flex-shrink-0 bg-secondary text-muted transition-colors">Under €50</button>
+          <button onclick="toggleQuickFilter(this)" class="qf-pill px-3 h-[30px] rounded-full text-[12px] font-medium whitespace-nowrap flex-shrink-0 bg-secondary text-muted transition-colors">Verified</button>
+          <button onclick="toggleQuickFilter(this)" class="qf-pill px-3 h-[30px] rounded-full text-[12px] font-medium whitespace-nowrap flex-shrink-0 bg-secondary text-muted transition-colors">On Sale</button>
+        </div>
+      </div>
+
+      <!-- ═══ PRODUCT GRID ═══ -->
+      <section class="px-4 pb-6 pt-3">
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-2.5 gap-y-4" id="productGrid">
+          <!-- Product cards generated by data below -->
+        </div>
+      </section>
+    </main>
+
+    <!-- ═══ FILTER DRAWER ═══ -->
+    <div id="filterDrawer" class="fixed inset-0 z-50 hidden">
+      <div class="absolute inset-0 bg-black/40" onclick="toggleFilterDrawer()"></div>
+      <div class="absolute bottom-0 left-0 right-0 bg-card rounded-t-2xl max-h-[85vh] overflow-y-auto" style="animation: slideUp 0.25s ease-out">
+        <div class="flex justify-center pt-2.5 pb-1">
+          <div class="w-10 h-1 rounded-full bg-border"></div>
+        </div>
+        <div class="flex items-center justify-between px-4 py-3 border-b border-border">
+          <h3 class="text-[15px] font-semibold text-foreground font-display">Filters</h3>
+          <button onclick="toggleFilterDrawer()" class="w-8 h-8 flex items-center justify-center rounded-full active:bg-secondary">
+            <span class="iconify w-4 h-4 text-foreground" data-icon="lucide:x"></span>
+          </button>
+        </div>
+        <div class="px-4 py-4 space-y-5">
+          <!-- Condition -->
+          <div>
+            <h4 class="text-[12px] font-semibold text-muted uppercase tracking-wider mb-2">Condition</h4>
+            <div class="flex flex-wrap gap-1.5">
+              <button onclick="this.classList.toggle('active-chip')" class="px-3 py-1.5 rounded-full text-[12px] font-medium bg-secondary text-muted">New</button>
+              <button onclick="this.classList.toggle('active-chip')" class="px-3 py-1.5 rounded-full text-[12px] font-medium bg-secondary text-muted">Like New</button>
+              <button onclick="this.classList.toggle('active-chip')" class="px-3 py-1.5 rounded-full text-[12px] font-medium bg-secondary text-muted">Used</button>
+            </div>
+          </div>
+          <!-- Price -->
+          <div>
+            <h4 class="text-[12px] font-semibold text-muted uppercase tracking-wider mb-2">Price</h4>
+            <div class="flex items-center gap-2">
+              <div class="flex-1 relative">
+                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-[12px] text-muted">€</span>
+                <input type="number" placeholder="Min" class="w-full h-10 pl-7 pr-3 rounded-xl bg-secondary text-[13px] text-foreground placeholder:text-muted outline-none focus:ring-1 focus:ring-foreground" />
+              </div>
+              <span class="text-[11px] text-muted">to</span>
+              <div class="flex-1 relative">
+                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-[12px] text-muted">€</span>
+                <input type="number" placeholder="Max" class="w-full h-10 pl-7 pr-3 rounded-xl bg-secondary text-[13px] text-foreground placeholder:text-muted outline-none focus:ring-1 focus:ring-foreground" />
+              </div>
+            </div>
+          </div>
+          <!-- Brand -->
+          <div>
+            <h4 class="text-[12px] font-semibold text-muted uppercase tracking-wider mb-2">Brand</h4>
+            <div class="flex flex-wrap gap-1.5">
+              <button onclick="this.classList.toggle('active-chip')" class="px-3 py-1.5 rounded-full text-[12px] font-medium bg-secondary text-muted">Apple</button>
+              <button onclick="this.classList.toggle('active-chip')" class="px-3 py-1.5 rounded-full text-[12px] font-medium bg-secondary text-muted">Samsung</button>
+              <button onclick="this.classList.toggle('active-chip')" class="px-3 py-1.5 rounded-full text-[12px] font-medium bg-secondary text-muted">Sony</button>
+              <button onclick="this.classList.toggle('active-chip')" class="px-3 py-1.5 rounded-full text-[12px] font-medium bg-secondary text-muted">Nike</button>
+              <button onclick="this.classList.toggle('active-chip')" class="px-3 py-1.5 rounded-full text-[12px] font-medium bg-secondary text-muted">Adidas</button>
+              <button onclick="this.classList.toggle('active-chip')" class="px-3 py-1.5 rounded-full text-[12px] font-medium bg-secondary text-muted">Other</button>
+            </div>
+          </div>
+        </div>
+        <div class="px-4 py-3 border-t border-border flex items-center gap-3 safe-bottom">
+          <button onclick="toggleFilterDrawer()" class="flex-1 h-11 rounded-xl border border-border text-[13px] font-medium text-foreground active:bg-secondary">Clear</button>
+          <button onclick="toggleFilterDrawer()" class="flex-1 h-11 rounded-xl bg-foreground text-white text-[13px] font-semibold">Show results</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ BOTTOM NAV ═══ -->
+    <nav class="fixed bottom-0 left-0 right-0 z-50 md:hidden">
+      <div class="bg-card border-t border-border/50 rounded-t-[20px] safe-bottom" style="box-shadow: 0 -1px 8px rgba(0,0,0,0.04)">
+        <div class="flex items-center justify-around h-[56px] px-4">
+          <a href="home.html" class="flex flex-col items-center gap-[2px] min-w-[44px] text-foreground">
+            <span class="iconify w-5 h-5" data-icon="lucide:home" style="stroke-width:2"></span>
+            <span class="text-[9px] font-medium leading-none">Home</span>
+          </a>
+          <a href="search.html" class="flex flex-col items-center gap-[2px] min-w-[44px] text-muted">
+            <span class="iconify w-5 h-5" data-icon="lucide:search"></span>
+            <span class="text-[9px] font-medium leading-none">Search</span>
+          </a>
+          <a href="sell.html" class="flex items-center justify-center w-10 h-10 rounded-full bg-foreground text-white">
+            <span class="iconify w-[18px] h-[18px]" data-icon="lucide:plus" style="stroke-width:2"></span>
+          </a>
+          <a href="#" class="flex flex-col items-center gap-[2px] min-w-[44px] text-muted">
+            <span class="iconify w-5 h-5" data-icon="lucide:message-circle"></span>
+            <span class="text-[9px] font-medium leading-none">Messages</span>
+          </a>
+          <a href="profile.html" class="flex flex-col items-center gap-[2px] min-w-[44px] text-muted">
+            <span class="iconify w-5 h-5" data-icon="lucide:user"></span>
+            <span class="text-[9px] font-medium leading-none">Profile</span>
+          </a>
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <style>
+    @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+    .active-chip { background: hsl(0 0% 7%) !important; color: white !important; }
+  </style>
+
+  <script>
+    // Product data
+    const products = [
+      { id:"1", title:"2022 BMW 330i xDrive Sedan", price:38500, image:"https://images.unsplash.com/photo-1555215695-3004980ad54e?w=600&h=800&fit=crop", category:"Automotive", seller:"treido", verified:true, timeAgo:"4w" },
+      { id:"2", title:'Samsung 65" OLED 4K Smart TV', price:2500, oldPrice:3200, discount:22, image:"https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=600&h=800&fit=crop", category:"Electronics", seller:"treido", verified:true, timeAgo:"4w" },
+      { id:"3", title:"iPhone 15 Pro Max 256GB", price:1950, oldPrice:2200, discount:11, image:"https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=600&h=800&fit=crop", category:"Electronics", seller:"treido", verified:true, timeAgo:"4w" },
+      { id:"4", title:'MacBook Pro 16" M3 Max 36GB', price:3499, image:"https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600&h=800&fit=crop", category:"Electronics", seller:"tech_haven", verified:true, timeAgo:"2d", condition:"Like New" },
+      { id:"5", title:"PlayStation 5 Digital Edition", price:449, oldPrice:499, discount:10, image:"https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=600&h=800&fit=crop", category:"Gaming", seller:"tech_haven", verified:true, timeAgo:"3d", condition:"New" },
+      { id:"6", title:"Air Jordan 1 Retro High Chicago", price:299, oldPrice:399, discount:25, image:"https://images.unsplash.com/photo-1600269452121-4f2416e55c28?w=600&h=800&fit=crop", category:"Fashion", seller:"sneaker_king", timeAgo:"1d", condition:"New" },
+      { id:"7", title:"Herman Miller Aeron Chair Size B", price:890, oldPrice:1200, discount:26, image:"https://images.unsplash.com/photo-1592078615290-033ee584e267?w=600&h=800&fit=crop", category:"Home", seller:"office_pro", verified:true, timeAgo:"5h", condition:"Used" },
+      { id:"8", title:"Canon EOS R6 Mark II Body", price:2199, image:"https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=600&h=800&fit=crop", category:"Electronics", seller:"photo_studio", verified:true, timeAgo:"12h", condition:"New" },
+      { id:"9", title:"Dyson V15 Detect Absolute", price:599, oldPrice:749, discount:20, image:"https://images.unsplash.com/photo-1558317374-067fb5f30001?w=600&h=800&fit=crop", category:"Home", seller:"home_deals", verified:true, timeAgo:"1d", condition:"New" },
+      { id:"10", title:"Rolex Submariner Date Steel", price:12500, image:"https://images.unsplash.com/photo-1587836374828-4dbafa94cf0e?w=600&h=800&fit=crop", category:"Fashion", seller:"luxury_watches", verified:true, timeAgo:"3h", condition:"Like New" },
+      { id:"11", title:"Mechanical Keyboard Cherry MX", price:149, oldPrice:199, discount:25, image:"https://images.unsplash.com/photo-1595225476474-87563907a212?w=600&h=800&fit=crop", category:"Gaming", seller:"tech_haven", timeAgo:"8h", condition:"New" },
+      { id:"12", title:"Vintage Leather Messenger Bag", price:89, image:"https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=600&h=800&fit=crop", category:"Fashion", seller:"artisan_goods", timeAgo:"2d", condition:"New" },
+    ];
+
+    function renderProducts(filter) {
+      const grid = document.getElementById('productGrid');
+      const items = filter ? products.filter(p => p.category === filter) : products;
+      grid.innerHTML = items.map(p => `
+        <a href="detail.html" class="group block">
+          <div class="relative aspect-[3/4] overflow-hidden rounded-xl bg-secondary mb-1.5">
+            <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover" loading="lazy" />
+            ${p.discount ? `<span class="absolute top-1.5 left-1.5 bg-destructive text-white text-[9px] font-semibold px-1.5 py-0.5 rounded">-${p.discount}%</span>` : ''}
+            ${p.condition ? `<span class="absolute bottom-1.5 left-1.5 bg-white/90 text-[9px] font-medium text-foreground px-1.5 py-0.5 rounded" style="backdrop-filter:blur(4px)">${p.condition}</span>` : ''}
+            <button onclick="event.preventDefault();event.stopPropagation();this.querySelector('.heart-icon').classList.toggle('liked')" class="absolute top-1.5 right-1.5 w-7 h-7 rounded-full bg-white/80 flex items-center justify-center" style="backdrop-filter:blur(4px)">
+              <span class="iconify heart-icon w-3.5 h-3.5 text-foreground/50" data-icon="lucide:heart"></span>
+            </button>
+          </div>
+          <div>
+            <div class="flex items-baseline gap-1.5">
+              <span class="text-[14px] font-semibold text-foreground">€${p.price.toLocaleString()}</span>
+              ${p.oldPrice ? `<span class="text-[11px] text-muted line-through">€${p.oldPrice.toLocaleString()}</span>` : ''}
+            </div>
+            <p class="text-[11px] text-muted line-clamp-2 leading-snug mt-0.5">${p.title}</p>
+            <div class="flex items-center gap-1 mt-1">
+              <span class="text-[10px]" style="color:hsl(0 0% 45% / 0.7)">${p.seller}</span>
+              ${p.verified ? '<span class="iconify w-2.5 h-2.5 text-success" data-icon="lucide:check-circle-2"></span>' : ''}
+            </div>
+          </div>
+        </a>
+      `).join('');
+      if (items.length === 0) {
+        grid.innerHTML = '<div class="col-span-full py-20 text-center"><p class="text-[14px] text-foreground font-medium mb-1">No products</p><p class="text-[12px] text-muted">Try a different category.</p></div>';
+      }
+    }
+
+    // Category pill toggle
+    function filterCategory(cat, el) {
+      document.querySelectorAll('.cat-pill').forEach(b => { b.classList.remove('bg-foreground','text-white'); b.classList.add('bg-secondary','text-muted'); });
+      if (el) { el.classList.remove('bg-secondary','text-muted'); el.classList.add('bg-foreground','text-white'); }
+      renderProducts(cat);
+    }
+
+    // Quick filter toggle
+    function toggleQuickFilter(el) {
+      el.classList.toggle('bg-secondary');
+      el.classList.toggle('text-muted');
+      el.classList.toggle('bg-foreground');
+      el.classList.toggle('text-white');
+    }
+
+    // Feed dropdown
+    function toggleFeedDropdown() { document.getElementById('feedMenu').classList.toggle('hidden'); }
+    function selectFeed(name) {
+      document.getElementById('feedLabel').textContent = name;
+      document.getElementById('feedMenu').classList.add('hidden');
+    }
+    document.addEventListener('click', (e) => {
+      if (!document.getElementById('feedDropdown').contains(e.target)) {
+        document.getElementById('feedMenu').classList.add('hidden');
+      }
+    });
+
+    // Filter drawer
+    function toggleFilterDrawer() { document.getElementById('filterDrawer').classList.toggle('hidden'); }
+
+    // Init
+    renderProducts(null);
+  </script>
+</body>
+</html>

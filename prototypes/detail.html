@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>treido — iPhone 15 Pro Max</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { display:['"Plus Jakarta Sans"','system-ui','sans-serif'], body:['Inter','system-ui','sans-serif'] },
+          colors: { background:'hsl(0 0% 98%)', foreground:'hsl(0 0% 7%)', card:'hsl(0 0% 100%)', secondary:'hsl(0 0% 95%)', muted:'hsl(0 0% 45%)', accent:'hsl(0 0% 92%)', border:'hsl(0 0% 91%)', destructive:'hsl(0 72% 51%)', success:'hsl(152 55% 41%)' }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family:'Inter',system-ui,sans-serif; }
+    h1,h2,h3,h4,h5,h6 { font-family:'Plus Jakarta Sans',system-ui,sans-serif; letter-spacing:-0.01em; }
+    .safe-bottom { padding-bottom:env(safe-area-inset-bottom,0px); }
+  </style>
+</head>
+<body class="bg-background antialiased">
+  <div class="min-h-screen pb-24 md:pb-0">
+
+    <!-- FLOATING TOP BAR -->
+    <div class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 h-12 bg-card/90 border-b border-border md:max-w-7xl md:mx-auto" style="backdrop-filter:blur(12px)">
+      <div class="flex items-center gap-2 min-w-0 flex-1">
+        <a href="home.html" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-secondary transition-colors flex-shrink-0 -ml-1">
+          <span class="iconify w-5 h-5 text-foreground" data-icon="lucide:arrow-left"></span>
+        </a>
+        <div class="w-7 h-7 rounded-full bg-secondary flex items-center justify-center text-[9px] font-bold text-foreground/60 flex-shrink-0">TR</div>
+        <span class="text-[13px] font-medium text-foreground truncate">iPhone 15 Pro Max 256GB</span>
+      </div>
+      <div class="flex items-center gap-1 flex-shrink-0">
+        <button onclick="this.querySelector('.iconify').classList.toggle('text-destructive')" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-secondary transition-colors">
+          <span class="iconify w-[18px] h-[18px] text-foreground" data-icon="lucide:heart"></span>
+        </button>
+        <button class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-secondary transition-colors">
+          <span class="iconify w-[18px] h-[18px] text-foreground" data-icon="lucide:share-2"></span>
+        </button>
+      </div>
+    </div>
+
+    <main class="max-w-7xl mx-auto pt-12">
+      <!-- IMAGE -->
+      <div class="relative aspect-[4/5] md:aspect-[16/9] bg-secondary overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=800&h=1000&fit=crop" alt="iPhone 15 Pro Max" class="w-full h-full object-cover" />
+        <button class="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/80 flex items-center justify-center md:hidden" style="backdrop-filter:blur(4px)">
+          <span class="iconify w-[18px] h-[18px] text-foreground/70" data-icon="lucide:heart"></span>
+        </button>
+      </div>
+
+      <!-- CONTENT CARD -->
+      <div class="relative -mt-4 bg-card rounded-t-2xl border-t border-border md:mt-0 md:rounded-none md:border-t-0">
+        <!-- Drag handle -->
+        <div class="flex justify-center pt-2.5 pb-1 md:hidden">
+          <div class="w-10 h-1 rounded-full bg-border"></div>
+        </div>
+
+        <!-- Category + meta -->
+        <div class="flex items-center justify-between px-4 py-2">
+          <div class="flex items-center gap-1.5">
+            <span class="iconify w-3.5 h-3.5 text-muted" data-icon="lucide:tag"></span>
+            <a href="category-detail.html" class="text-[12px] text-muted hover:text-foreground transition-colors">Electronics</a>
+            <span class="text-muted/40 text-[10px]">·</span>
+            <span class="text-[12px] text-muted">New</span>
+          </div>
+          <div class="flex items-center gap-3 text-[11px] text-muted">
+            <span class="flex items-center gap-1"><span class="iconify w-3 h-3" data-icon="lucide:clock"></span>4w</span>
+            <span class="flex items-center gap-1"><span class="iconify w-3 h-3" data-icon="lucide:eye"></span>23</span>
+          </div>
+        </div>
+
+        <!-- Price + Title -->
+        <div class="px-4 pb-3">
+          <div class="flex items-baseline gap-2 mb-1">
+            <span class="text-[24px] font-bold font-display text-foreground">1.950,00 €</span>
+            <span class="text-[14px] text-muted line-through">2.200,00 €</span>
+          </div>
+          <h1 class="text-[15px] text-foreground/80 leading-snug">iPhone 15 Pro Max 256GB</h1>
+          <span class="inline-block mt-2 px-2.5 py-1 rounded-full bg-secondary text-[11px] font-medium text-muted">New</span>
+          <div class="flex items-center gap-1.5 mt-2 text-[12px] text-muted">
+            <span class="iconify w-3 h-3" data-icon="lucide:map-pin"></span>
+            <span>Sofia, Bulgaria</span>
+            <span class="text-muted/40">·</span>
+            <span class="iconify w-3 h-3" data-icon="lucide:clock"></span>
+            <span>4w</span>
+          </div>
+        </div>
+
+        <!-- COLLAPSIBLE SECTIONS -->
+        <div class="border-b border-border">
+          <button onclick="toggleSection('specs')" class="w-full flex items-center justify-between py-3.5 px-4 text-left">
+            <span class="text-[14px] font-medium text-foreground">All Specifications</span>
+            <span class="iconify w-4 h-4 text-muted transition-transform" data-icon="lucide:chevron-down" id="specsIcon"></span>
+          </button>
+          <div id="specs" class="hidden px-4 pb-4">
+            <div class="grid grid-cols-2 gap-y-2.5 gap-x-4">
+              <div><p class="text-[11px] text-muted">Condition</p><p class="text-[13px] text-foreground font-medium">New</p></div>
+              <div><p class="text-[11px] text-muted">Category</p><p class="text-[13px] text-foreground font-medium">Electronics</p></div>
+              <div><p class="text-[11px] text-muted">Listed</p><p class="text-[13px] text-foreground font-medium">4w ago</p></div>
+              <div><p class="text-[11px] text-muted">Shipping</p><p class="text-[13px] text-foreground font-medium">Available</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="border-b border-border">
+          <button onclick="toggleSection('desc')" class="w-full flex items-center justify-between py-3.5 px-4 text-left">
+            <span class="text-[14px] font-medium text-foreground">Description</span>
+            <span class="iconify w-4 h-4 text-muted transition-transform" data-icon="lucide:chevron-down" id="descIcon"></span>
+          </button>
+          <div id="desc" class="hidden px-4 pb-4">
+            <p class="text-[13px] text-muted leading-relaxed">Great condition item, barely used. Everything works perfectly. Comes with all original accessories and packaging. Local pickup available or can ship nationwide. Battery health at 100%.</p>
+          </div>
+        </div>
+
+        <div class="border-b border-border">
+          <button onclick="toggleSection('shipping')" class="w-full flex items-center justify-between py-3.5 px-4 text-left">
+            <span class="text-[14px] font-medium text-foreground">Shipping</span>
+            <span class="iconify w-4 h-4 text-muted transition-transform" data-icon="lucide:chevron-down" id="shippingIcon"></span>
+          </button>
+          <div id="shipping" class="hidden px-4 pb-4 space-y-2">
+            <div class="flex items-center justify-between"><span class="text-[13px] text-foreground">Standard shipping</span><span class="text-[13px] text-muted">€5.99</span></div>
+            <div class="flex items-center justify-between"><span class="text-[13px] text-foreground">Express shipping</span><span class="text-[13px] text-muted">€12.99</span></div>
+            <div class="flex items-center justify-between"><span class="text-[13px] text-foreground">Local pickup</span><span class="text-[13px] text-success font-medium">Free</span></div>
+          </div>
+        </div>
+
+        <div class="border-b border-border">
+          <button onclick="toggleSection('seller')" class="w-full flex items-center justify-between py-3.5 px-4 text-left">
+            <span class="text-[14px] font-medium text-foreground">Seller</span>
+            <span class="iconify w-4 h-4 text-muted transition-transform" data-icon="lucide:chevron-down" id="sellerIcon"></span>
+          </button>
+          <div id="seller" class="hidden px-4 pb-4">
+            <div class="flex items-center gap-3">
+              <div class="w-11 h-11 rounded-full bg-secondary flex items-center justify-center text-[13px] font-bold text-foreground/60">TR</div>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-1.5">
+                  <span class="text-[13px] font-semibold text-foreground">treido</span>
+                  <span class="iconify w-3.5 h-3.5 text-success" data-icon="lucide:check-circle-2"></span>
+                </div>
+                <div class="flex items-center gap-1 mt-0.5">
+                  <span class="iconify w-3 h-3 text-foreground" data-icon="lucide:star" style="fill:currentColor"></span>
+                  <span class="text-[11px] text-muted">4.8 (124 reviews)</span>
+                </div>
+              </div>
+              <a href="profile.html" class="flex items-center gap-0.5 text-[12px] text-muted hover:text-foreground transition-colors">View <span class="iconify w-3.5 h-3.5" data-icon="lucide:chevron-right"></span></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- RELATED -->
+        <div class="px-4 py-5">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-[14px] font-semibold text-foreground font-display">Similar listings</h3>
+            <a href="category-detail.html" class="text-[12px] text-muted hover:text-foreground transition-colors">See all</a>
+          </div>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-x-3 gap-y-5">
+            <a href="detail.html" class="group block">
+              <div class="relative aspect-[3/4] overflow-hidden rounded-xl bg-secondary mb-1.5">
+                <img src="https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=600&h=800&fit=crop" alt="" class="w-full h-full object-cover" loading="lazy" />
+                <span class="absolute top-1.5 left-1.5 bg-destructive text-white text-[9px] font-semibold px-1.5 py-0.5 rounded">-22%</span>
+              </div>
+              <div><span class="text-[14px] font-semibold text-foreground">€2,500</span><span class="text-[11px] text-muted line-through ml-1.5">€3,200</span></div>
+              <p class="text-[11px] text-muted line-clamp-2 leading-snug mt-0.5">Samsung 65" OLED 4K Smart TV</p>
+            </a>
+            <a href="detail.html" class="group block">
+              <div class="relative aspect-[3/4] overflow-hidden rounded-xl bg-secondary mb-1.5">
+                <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600&h=800&fit=crop" alt="" class="w-full h-full object-cover" loading="lazy" />
+                <span class="absolute bottom-1.5 left-1.5 bg-white/90 text-[9px] font-medium text-foreground px-1.5 py-0.5 rounded" style="backdrop-filter:blur(4px)">Like New</span>
+              </div>
+              <div><span class="text-[14px] font-semibold text-foreground">€3,499</span></div>
+              <p class="text-[11px] text-muted line-clamp-2 leading-snug mt-0.5">MacBook Pro 16" M3 Max 36GB</p>
+            </a>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- STICKY BOTTOM BAR -->
+    <div class="fixed bottom-0 left-0 right-0 z-50 bg-card/95 border-t border-border safe-bottom md:max-w-7xl md:mx-auto" style="backdrop-filter:blur(12px)">
+      <div class="flex items-center gap-3 px-4 py-2.5">
+        <button class="flex items-center gap-2 px-4 h-11 rounded-xl border border-border hover:bg-secondary transition-colors flex-shrink-0">
+          <span class="iconify w-4 h-4 text-foreground" data-icon="lucide:message-circle"></span>
+          <span class="text-[13px] font-medium text-foreground">Chat</span>
+        </button>
+        <button class="flex-1 h-11 rounded-xl bg-foreground text-white text-[14px] font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
+          <span class="iconify w-4 h-4" data-icon="lucide:shopping-cart"></span>
+          Add · 1.950,00 €
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleSection(id) {
+      const el = document.getElementById(id);
+      const icon = document.getElementById(id + 'Icon');
+      el.classList.toggle('hidden');
+      icon.style.transform = el.classList.contains('hidden') ? '' : 'rotate(180deg)';
+    }
+  </script>
+</body>
+</html>

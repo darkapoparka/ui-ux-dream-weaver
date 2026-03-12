@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>treido — Electronics</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { display: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'], body: ['Inter', 'system-ui', 'sans-serif'] },
+          colors: { background:'hsl(0 0% 98%)', foreground:'hsl(0 0% 7%)', card:'hsl(0 0% 100%)', secondary:'hsl(0 0% 95%)', muted:'hsl(0 0% 45%)', accent:'hsl(0 0% 92%)', border:'hsl(0 0% 91%)', destructive:'hsl(0 72% 51%)', success:'hsl(152 55% 41%)' }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family:'Inter',system-ui,sans-serif; }
+    h1,h2,h3,h4,h5,h6 { font-family:'Plus Jakarta Sans',system-ui,sans-serif; letter-spacing:-0.01em; }
+    .scrollbar-hide { -ms-overflow-style:none; scrollbar-width:none; }
+    .scrollbar-hide::-webkit-scrollbar { display:none; }
+    .safe-bottom { padding-bottom:env(safe-area-inset-bottom,0px); }
+  </style>
+</head>
+<body class="bg-background antialiased">
+  <div class="min-h-screen pb-20 md:pb-0">
+
+    <!-- CONTEXTUAL HEADER -->
+    <header class="sticky top-0 z-40 bg-card border-b border-border/50">
+      <div class="max-w-7xl mx-auto flex items-center h-[44px] px-4">
+        <a href="categories.html" class="w-8 h-8 flex items-center justify-center rounded-full active:bg-secondary -ml-2">
+          <span class="iconify w-[18px] h-[18px] text-foreground" data-icon="lucide:arrow-left"></span>
+        </a>
+        <span class="text-[15px] font-semibold text-foreground ml-1 font-display">Electronics</span>
+        <div class="ml-auto flex items-center gap-1">
+          <span class="text-[12px] text-muted">4</span>
+          <a href="search.html" class="w-8 h-8 flex items-center justify-center rounded-full active:bg-secondary">
+            <span class="iconify w-[18px] h-[18px] text-foreground" data-icon="lucide:search"></span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto">
+      <!-- STICKY TOOLBAR -->
+      <div class="sticky top-[44px] z-30 bg-background/95" style="backdrop-filter:blur(8px)">
+        <!-- Subcategory pills -->
+        <div class="px-4 pt-2 pb-1.5">
+          <div class="flex items-center gap-1.5 overflow-x-auto scrollbar-hide">
+            <button onclick="activateSub(this)" class="sub-pill px-2.5 h-7 rounded-full text-[11px] font-medium whitespace-nowrap flex-shrink-0 bg-foreground text-white">All</button>
+            <button onclick="activateSub(this)" class="sub-pill px-2.5 h-7 rounded-full text-[11px] font-medium whitespace-nowrap flex-shrink-0 bg-secondary text-muted">Phones</button>
+            <button onclick="activateSub(this)" class="sub-pill px-2.5 h-7 rounded-full text-[11px] font-medium whitespace-nowrap flex-shrink-0 bg-secondary text-muted">Laptops</button>
+            <button onclick="activateSub(this)" class="sub-pill px-2.5 h-7 rounded-full text-[11px] font-medium whitespace-nowrap flex-shrink-0 bg-secondary text-muted">TVs</button>
+            <button onclick="activateSub(this)" class="sub-pill px-2.5 h-7 rounded-full text-[11px] font-medium whitespace-nowrap flex-shrink-0 bg-secondary text-muted">Cameras</button>
+            <button onclick="activateSub(this)" class="sub-pill px-2.5 h-7 rounded-full text-[11px] font-medium whitespace-nowrap flex-shrink-0 bg-secondary text-muted">Audio</button>
+            <button onclick="activateSub(this)" class="sub-pill px-2.5 h-7 rounded-full text-[11px] font-medium whitespace-nowrap flex-shrink-0 bg-secondary text-muted">Wearables</button>
+          </div>
+        </div>
+
+        <!-- Filter/Sort toolbar -->
+        <div class="px-4 py-1.5">
+          <div class="flex items-center gap-1.5 overflow-x-auto scrollbar-hide">
+            <button class="flex items-center gap-1.5 px-3 h-8 rounded-full border border-border text-[12px] font-medium flex-shrink-0 text-foreground active:bg-secondary">
+              <span class="iconify w-3.5 h-3.5" data-icon="lucide:sliders-horizontal"></span>
+              Filter
+            </button>
+            <button class="flex items-center gap-1.5 px-3 h-8 rounded-full border border-border text-[12px] font-medium flex-shrink-0 text-foreground active:bg-secondary">
+              <span class="iconify w-3.5 h-3.5" data-icon="lucide:arrow-up-down"></span>
+              Sort
+            </button>
+            <div class="w-px h-5 bg-border flex-shrink-0"></div>
+            <button onclick="toggleQuickFilter(this)" class="qf flex items-center gap-1 px-2.5 h-8 rounded-full text-[11px] font-medium whitespace-nowrap flex-shrink-0 bg-secondary text-muted">
+              <span class="iconify w-3 h-3" data-icon="lucide:percent"></span>On Sale
+            </button>
+            <button onclick="toggleQuickFilter(this)" class="qf flex items-center gap-1 px-2.5 h-8 rounded-full text-[11px] font-medium whitespace-nowrap flex-shrink-0 bg-secondary text-muted">
+              <span class="iconify w-3 h-3" data-icon="lucide:truck"></span>Free Ship
+            </button>
+            <button onclick="toggleQuickFilter(this)" class="qf flex items-center gap-1 px-2.5 h-8 rounded-full text-[11px] font-medium whitespace-nowrap flex-shrink-0 bg-secondary text-muted">
+              <span class="iconify w-3 h-3" data-icon="lucide:check-circle-2"></span>Verified
+            </button>
+            <div class="flex-1"></div>
+            <!-- View mode toggle -->
+            <div class="flex items-center gap-0.5 flex-shrink-0 bg-secondary rounded-lg p-0.5">
+              <button id="gridBtn" onclick="setView('grid')" class="p-1.5 rounded-md bg-card text-foreground">
+                <span class="iconify w-3.5 h-3.5" data-icon="lucide:layout-grid"></span>
+              </button>
+              <button id="listBtn" onclick="setView('list')" class="p-1.5 rounded-md text-muted">
+                <span class="iconify w-3.5 h-3.5" data-icon="lucide:stretch-horizontal"></span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="h-px bg-border/60"></div>
+      </div>
+
+      <!-- PRODUCT GRID -->
+      <section class="px-4 pt-3 pb-6">
+        <div id="gridView" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-3 gap-y-4">
+          <!-- Products -->
+          <a href="detail.html" class="group block">
+            <div class="relative aspect-[3/4] overflow-hidden rounded-xl bg-secondary mb-1.5">
+              <img src="https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=600&h=800&fit=crop" alt="" class="w-full h-full object-cover" loading="lazy" />
+              <span class="absolute top-1.5 left-1.5 bg-destructive text-white text-[9px] font-semibold px-1.5 py-0.5 rounded">-22%</span>
+              <button class="absolute top-1.5 right-1.5 w-7 h-7 rounded-full bg-white/80 flex items-center justify-center" style="backdrop-filter:blur(4px)"><span class="iconify w-3.5 h-3.5 text-foreground/50" data-icon="lucide:heart"></span></button>
+            </div>
+            <div>
+              <div class="flex items-baseline gap-1.5"><span class="text-[14px] font-semibold text-foreground">€2,500</span><span class="text-[11px] text-muted line-through">€3,200</span></div>
+              <p class="text-[11px] text-muted line-clamp-2 leading-snug mt-0.5">Samsung 65" OLED 4K Smart TV</p>
+              <div class="flex items-center gap-1 mt-1"><span class="text-[10px]" style="color:hsl(0 0% 45%/0.7)">treido</span><span class="iconify w-2.5 h-2.5 text-success" data-icon="lucide:check-circle-2"></span></div>
+            </div>
+          </a>
+          <a href="detail.html" class="group block">
+            <div class="relative aspect-[3/4] overflow-hidden rounded-xl bg-secondary mb-1.5">
+              <img src="https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=600&h=800&fit=crop" alt="" class="w-full h-full object-cover" loading="lazy" />
+              <span class="absolute top-1.5 left-1.5 bg-destructive text-white text-[9px] font-semibold px-1.5 py-0.5 rounded">-11%</span>
+              <button class="absolute top-1.5 right-1.5 w-7 h-7 rounded-full bg-white/80 flex items-center justify-center" style="backdrop-filter:blur(4px)"><span class="iconify w-3.5 h-3.5 text-foreground/50" data-icon="lucide:heart"></span></button>
+            </div>
+            <div>
+              <div class="flex items-baseline gap-1.5"><span class="text-[14px] font-semibold text-foreground">€1,950</span><span class="text-[11px] text-muted line-through">€2,200</span></div>
+              <p class="text-[11px] text-muted line-clamp-2 leading-snug mt-0.5">iPhone 15 Pro Max 256GB</p>
+              <div class="flex items-center gap-1 mt-1"><span class="text-[10px]" style="color:hsl(0 0% 45%/0.7)">treido</span><span class="iconify w-2.5 h-2.5 text-success" data-icon="lucide:check-circle-2"></span></div>
+            </div>
+          </a>
+          <a href="detail.html" class="group block">
+            <div class="relative aspect-[3/4] overflow-hidden rounded-xl bg-secondary mb-1.5">
+              <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600&h=800&fit=crop" alt="" class="w-full h-full object-cover" loading="lazy" />
+              <span class="absolute bottom-1.5 left-1.5 bg-white/90 text-[9px] font-medium text-foreground px-1.5 py-0.5 rounded" style="backdrop-filter:blur(4px)">Like New</span>
+              <button class="absolute top-1.5 right-1.5 w-7 h-7 rounded-full bg-white/80 flex items-center justify-center" style="backdrop-filter:blur(4px)"><span class="iconify w-3.5 h-3.5 text-foreground/50" data-icon="lucide:heart"></span></button>
+            </div>
+            <div>
+              <div class="flex items-baseline gap-1.5"><span class="text-[14px] font-semibold text-foreground">€3,499</span></div>
+              <p class="text-[11px] text-muted line-clamp-2 leading-snug mt-0.5">MacBook Pro 16" M3 Max 36GB</p>
+              <div class="flex items-center gap-1 mt-1"><span class="text-[10px]" style="color:hsl(0 0% 45%/0.7)">tech_haven</span><span class="iconify w-2.5 h-2.5 text-success" data-icon="lucide:check-circle-2"></span></div>
+            </div>
+          </a>
+          <a href="detail.html" class="group block">
+            <div class="relative aspect-[3/4] overflow-hidden rounded-xl bg-secondary mb-1.5">
+              <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=600&h=800&fit=crop" alt="" class="w-full h-full object-cover" loading="lazy" />
+              <span class="absolute bottom-1.5 left-1.5 bg-white/90 text-[9px] font-medium text-foreground px-1.5 py-0.5 rounded" style="backdrop-filter:blur(4px)">New</span>
+              <button class="absolute top-1.5 right-1.5 w-7 h-7 rounded-full bg-white/80 flex items-center justify-center" style="backdrop-filter:blur(4px)"><span class="iconify w-3.5 h-3.5 text-foreground/50" data-icon="lucide:heart"></span></button>
+            </div>
+            <div>
+              <div class="flex items-baseline gap-1.5"><span class="text-[14px] font-semibold text-foreground">€2,199</span></div>
+              <p class="text-[11px] text-muted line-clamp-2 leading-snug mt-0.5">Canon EOS R6 Mark II Body</p>
+              <div class="flex items-center gap-1 mt-1"><span class="text-[10px]" style="color:hsl(0 0% 45%/0.7)">photo_studio</span><span class="iconify w-2.5 h-2.5 text-success" data-icon="lucide:check-circle-2"></span></div>
+            </div>
+          </a>
+        </div>
+        <!-- List view (hidden by default) -->
+        <div id="listView" class="hidden divide-y divide-border/50">
+          <a href="detail.html" class="flex gap-3 py-3">
+            <div class="w-24 h-24 rounded-xl bg-secondary overflow-hidden flex-shrink-0"><img src="https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=200&h=200&fit=crop" class="w-full h-full object-cover" /></div>
+            <div class="flex-1 min-w-0 py-0.5">
+              <p class="text-[13px] text-foreground font-medium line-clamp-2 leading-snug">Samsung 65" OLED 4K Smart TV</p>
+              <div class="flex items-baseline gap-1.5 mt-1"><span class="text-[15px] font-semibold text-foreground">€2,500</span><span class="text-[11px] text-muted line-through">€3,200</span></div>
+              <div class="flex items-center gap-1 mt-1.5"><span class="text-[10px]" style="color:hsl(0 0% 45%/0.7)">treido</span><span class="iconify w-2.5 h-2.5 text-success" data-icon="lucide:check-circle-2"></span><span class="text-[10px] text-muted ml-1">· 4w</span></div>
+            </div>
+          </a>
+          <a href="detail.html" class="flex gap-3 py-3">
+            <div class="w-24 h-24 rounded-xl bg-secondary overflow-hidden flex-shrink-0"><img src="https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=200&h=200&fit=crop" class="w-full h-full object-cover" /></div>
+            <div class="flex-1 min-w-0 py-0.5">
+              <p class="text-[13px] text-foreground font-medium line-clamp-2 leading-snug">iPhone 15 Pro Max 256GB</p>
+              <div class="flex items-baseline gap-1.5 mt-1"><span class="text-[15px] font-semibold text-foreground">€1,950</span><span class="text-[11px] text-muted line-through">€2,200</span></div>
+              <div class="flex items-center gap-1 mt-1.5"><span class="text-[10px]" style="color:hsl(0 0% 45%/0.7)">treido</span><span class="iconify w-2.5 h-2.5 text-success" data-icon="lucide:check-circle-2"></span><span class="text-[10px] text-muted ml-1">· 4w</span></div>
+            </div>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <!-- BOTTOM NAV -->
+    <nav class="fixed bottom-0 left-0 right-0 z-50 md:hidden">
+      <div class="bg-card border-t border-border/50 rounded-t-[20px] safe-bottom" style="box-shadow:0 -1px 8px rgba(0,0,0,0.04)">
+        <div class="flex items-center justify-around h-[56px] px-4">
+          <a href="home.html" class="flex flex-col items-center gap-[2px] min-w-[44px] text-muted"><span class="iconify w-5 h-5" data-icon="lucide:home"></span><span class="text-[9px] font-medium leading-none">Home</span></a>
+          <a href="search.html" class="flex flex-col items-center gap-[2px] min-w-[44px] text-muted"><span class="iconify w-5 h-5" data-icon="lucide:search"></span><span class="text-[9px] font-medium leading-none">Search</span></a>
+          <a href="sell.html" class="flex items-center justify-center w-10 h-10 rounded-full bg-foreground text-white"><span class="iconify w-[18px] h-[18px]" data-icon="lucide:plus" style="stroke-width:2"></span></a>
+          <a href="#" class="flex flex-col items-center gap-[2px] min-w-[44px] text-muted"><span class="iconify w-5 h-5" data-icon="lucide:message-circle"></span><span class="text-[9px] font-medium leading-none">Messages</span></a>
+          <a href="profile.html" class="flex flex-col items-center gap-[2px] min-w-[44px] text-muted"><span class="iconify w-5 h-5" data-icon="lucide:user"></span><span class="text-[9px] font-medium leading-none">Profile</span></a>
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <script>
+    function activateSub(el) {
+      document.querySelectorAll('.sub-pill').forEach(b => { b.classList.remove('bg-foreground','text-white'); b.classList.add('bg-secondary','text-muted'); });
+      el.classList.remove('bg-secondary','text-muted'); el.classList.add('bg-foreground','text-white');
+    }
+    function toggleQuickFilter(el) {
+      el.classList.toggle('bg-secondary'); el.classList.toggle('text-muted');
+      el.classList.toggle('bg-foreground'); el.classList.toggle('text-white');
+    }
+    function setView(mode) {
+      document.getElementById('gridView').classList.toggle('hidden', mode==='list');
+      document.getElementById('listView').classList.toggle('hidden', mode==='grid');
+      document.getElementById('gridBtn').className = 'p-1.5 rounded-md ' + (mode==='grid' ? 'bg-card text-foreground' : 'text-muted');
+      document.getElementById('listBtn').className = 'p-1.5 rounded-md ' + (mode==='list' ? 'bg-card text-foreground' : 'text-muted');
+    }
+  </script>
+</body>
+</html>

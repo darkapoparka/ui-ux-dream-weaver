@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>treido — Prototype Index</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            body: ['Inter', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            background: 'hsl(0 0% 98%)',
+            foreground: 'hsl(0 0% 7%)',
+            card: 'hsl(0 0% 100%)',
+            secondary: 'hsl(0 0% 95%)',
+            muted: 'hsl(0 0% 45%)',
+            border: 'hsl(0 0% 91%)',
+            accent: 'hsl(0 0% 92%)',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-background font-body antialiased min-h-screen flex items-center justify-center p-6">
+  <div class="max-w-md w-full">
+    <h1 class="text-[20px] font-extrabold font-display text-foreground tracking-tight mb-1">treido.</h1>
+    <p class="text-[13px] text-muted mb-6">Static HTML prototypes — click to preview each route.</p>
+    <div class="space-y-1.5">
+      <a href="home.html" class="flex items-center justify-between px-4 py-3 rounded-xl bg-card border border-border hover:bg-secondary transition-colors">
+        <span class="text-[14px] font-medium text-foreground">Home</span>
+        <span class="text-[12px] text-muted">/ (feed + filters)</span>
+      </a>
+      <a href="categories.html" class="flex items-center justify-between px-4 py-3 rounded-xl bg-card border border-border hover:bg-secondary transition-colors">
+        <span class="text-[14px] font-medium text-foreground">Categories</span>
+        <span class="text-[12px] text-muted">/categories</span>
+      </a>
+      <a href="category-detail.html" class="flex items-center justify-between px-4 py-3 rounded-xl bg-card border border-border hover:bg-secondary transition-colors">
+        <span class="text-[14px] font-medium text-foreground">Category Detail</span>
+        <span class="text-[12px] text-muted">/categories/electronics</span>
+      </a>
+      <a href="search.html" class="flex items-center justify-between px-4 py-3 rounded-xl bg-card border border-border hover:bg-secondary transition-colors">
+        <span class="text-[14px] font-medium text-foreground">Search</span>
+        <span class="text-[12px] text-muted">/search</span>
+      </a>
+      <a href="detail.html" class="flex items-center justify-between px-4 py-3 rounded-xl bg-card border border-border hover:bg-secondary transition-colors">
+        <span class="text-[14px] font-medium text-foreground">Product Detail</span>
+        <span class="text-[12px] text-muted">/product/:id</span>
+      </a>
+      <a href="sell.html" class="flex items-center justify-between px-4 py-3 rounded-xl bg-card border border-border hover:bg-secondary transition-colors">
+        <span class="text-[14px] font-medium text-foreground">Sell / New Listing</span>
+        <span class="text-[12px] text-muted">/sell</span>
+      </a>
+      <a href="profile.html" class="flex items-center justify-between px-4 py-3 rounded-xl bg-card border border-border hover:bg-secondary transition-colors">
+        <span class="text-[14px] font-medium text-foreground">Profile</span>
+        <span class="text-[12px] text-muted">/profile</span>
+      </a>
+    </div>
+  </div>
+</body>
+</html>
